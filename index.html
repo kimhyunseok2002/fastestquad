@@ -35,6 +35,7 @@
   --c-esc: #2a6ad0;
   --c-prop: #26272b;
   --c-bay: #34373d;
+  --flow: #7fdcff;
   --display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
   --body: "IBM Plex Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
@@ -109,44 +110,113 @@ h1 {
 .fig .v small { font-family: var(--mono); font-weight: 400; font-size: 14px; color: var(--muted); margin-left: 4px; }
 .fig .s { font-family: var(--mono); font-size: 11.5px; color: var(--faint); }
 
-/* ---------- data sheet */
-.sheet { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 56px; padding-block: 30px 40px; }
-.col { display: grid; gap: 34px; align-content: start; min-width: 0; }
-section.block { min-width: 0; }
-h2 {
-  font-family: var(--display); font-stretch: 125%; font-weight: 700; font-size: 13px;
-  letter-spacing: .2em; text-transform: uppercase; margin: 0 0 6px; color: var(--fg);
-  display: flex; align-items: baseline; gap: 10px;
+/* ---------- airflow tag */
+.flowtag {
+  position: absolute; top: 12px; left: max(16px, env(safe-area-inset-left, 0px));
+  display: flex; align-items: center; gap: 8px; pointer-events: none;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--flow);
 }
-h2 em { font-style: normal; font-family: var(--mono); font-weight: 400; font-size: 11px; letter-spacing: .08em; color: var(--faint); text-transform: none; }
-dl.spec { margin: 0; display: grid; grid-template-columns: minmax(118px, 34%) minmax(0, 1fr); }
-dl.spec dt, dl.spec dd { border-top: 1px solid var(--line); padding: 10px 0; margin: 0; }
-dl.spec dt { color: var(--muted); font-size: 13.5px; padding-right: 14px; }
-dl.spec dd { font-size: 14.5px; }
-.n { font-family: var(--mono); font-size: .95em; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.note { color: var(--muted); font-size: 13.5px; margin: 10px 0 0; max-width: 62ch; }
-ol.path { margin: 8px 0 0; padding: 0; list-style: none; counter-reset: p; display: grid; gap: 6px; }
-ol.path li { counter-increment: p; position: relative; padding-left: 26px; font-size: 14px; }
-ol.path li::before { content: counter(p); position: absolute; left: 0; top: 0; font-family: var(--mono); font-size: 12px; color: var(--accent-ink); padding-top: 2px; }
-ul.todo { margin: 6px 0 0; padding: 0; list-style: none; display: grid; }
-ul.todo li { border-top: 1px solid var(--line); padding: 9px 0 9px 22px; position: relative; font-size: 14.5px; }
-ul.todo li::before { content: ""; position: absolute; left: 2px; top: 15px; width: 9px; height: 9px; border: 1px solid var(--faint); }
+.flowtag::before { content: ""; width: 18px; height: 2px; background: linear-gradient(90deg, transparent, var(--flow)); }
 
-/* mass bars */
-.bars { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
-.bars li { display: grid; grid-template-columns: minmax(118px, 34%) minmax(0, 1fr) 62px; align-items: center; gap: 10px; font-size: 13.5px; }
+/* ---------- section nav */
+.secnav {
+  position: sticky; top: 0; z-index: 10; border-block: 1px solid var(--line);
+  background: rgba(0, 0, 0, .86); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+}
+.secnav-in { position: relative; display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-block: 10px; }
+.secnav-in::-webkit-scrollbar { display: none; }
+.secnav a {
+  flex: none; font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--muted); text-decoration: none; padding: 7px 12px; border: 1px solid var(--line2); border-radius: 999px;
+  transition: color .15s, border-color .15s, background-color .15s;
+}
+.secnav a .no { color: var(--faint); margin-right: 6px; }
+.secnav a:hover { color: var(--fg); border-color: var(--muted); }
+.secnav a[aria-current="location"] { color: var(--fg); border-color: var(--accent); background: rgba(208, 20, 44, .14); }
+.secnav a[aria-current="location"] .no { color: var(--accent-ink); }
+
+/* ---------- data sheet: one section per row, number + title on the left, values on the right */
+.sheet { padding-block: 0 16px; }
+.sec {
+  display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 16px 44px;
+  padding-block: 38px 42px; border-top: 1px solid var(--line); scroll-margin-top: 56px;
+}
+.sec:first-child { border-top: 0; }
+.sec-h { position: sticky; top: 80px; align-self: start; display: grid; gap: 8px; justify-items: start; }
+.sec-h .no { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; color: var(--accent-ink); }
+h2 {
+  font-family: var(--display); font-stretch: 125%; font-weight: 700; font-size: 17px; line-height: 1.25;
+  letter-spacing: .06em; text-transform: uppercase; margin: 0; color: var(--fg);
+}
+.tag {
+  font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: var(--muted);
+  border: 1px solid var(--line2); border-radius: 999px; padding: 2px 9px;
+}
+.sec-b { min-width: 0; display: grid; gap: 24px; align-content: start; }
+
+.items { display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); gap: 0 32px; }
+.items.c2 { --cols: 2; }
+.items.c4 { --cols: 4; }
+.item.span2 { grid-column: span 2; }
+.item { border-top: 1px solid var(--line2); padding: 14px 0 16px; display: grid; gap: 5px; align-content: start; min-width: 0; }
+.item.wide { grid-column: 1 / -1; }
+.item .k { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.item .v {
+  font-family: var(--display); font-stretch: 106%; font-weight: 700; font-size: 22px; line-height: 1.2;
+  font-variant-numeric: tabular-nums; color: var(--fg); overflow-wrap: anywhere;
+}
+.item .v small { font-family: var(--mono); font-weight: 400; font-size: 13px; letter-spacing: 0; color: var(--muted); margin-left: 4px; }
+.item .d { font-size: 14px; line-height: 1.5; color: var(--muted); }
+.n { font-family: var(--mono); font-size: .95em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.note { color: var(--muted); font-size: 13.5px; margin: 0; max-width: 70ch; padding-left: 12px; border-left: 2px solid var(--line2); }
+
+.panel { border: 1px solid var(--line2); border-radius: 4px; padding: 18px; background: #060708; min-width: 0; }
+.panel-h { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+.panel .items { margin-top: 4px; }
+
+/* prop layout, seen from the nose */
+.frontview { margin: 0; display: grid; grid-template-columns: minmax(0, 250px) minmax(0, 1fr); gap: 22px; align-items: center; }
+.frontview svg { display: block; width: 100%; height: auto; }
+.frontview figcaption p { margin: 0 0 8px; font-size: 14.5px; }
+.frontview figcaption p.d { color: var(--muted); font-size: 13.5px; margin: 0; }
+.fv-fus { fill: #1b1d21; stroke: var(--line2); stroke-width: 1; }
+.fv-fin { stroke: #c9cbc6; stroke-width: 5; stroke-linecap: round; }
+.fv-disc { fill: rgba(54, 200, 255, .05); stroke: var(--muted); stroke-width: 1; stroke-dasharray: 3 3; }
+.fv-nac { fill: #e9eae5; }
+.fv-arc { fill: none; stroke: var(--accent-ink); stroke-width: 2.4; }
+.fv-head { fill: var(--accent-ink); }
+.fv-rot { font-family: var(--mono); font-size: 11px; fill: var(--fg); }
+.fv-ang { font-family: var(--mono); font-size: 11px; fill: var(--muted); }
+
+/* cooling path */
+.steps { margin: 16px 0 0; padding: 0; list-style: none; counter-reset: s; display: grid; }
+.steps li { counter-increment: s; position: relative; padding: 1px 0 14px 36px; font-size: 14.5px; line-height: 1.5; }
+.steps li:last-child { padding-bottom: 0; }
+.steps li::before {
+  content: counter(s); position: absolute; left: 0; top: 0; width: 22px; height: 22px; border-radius: 50%;
+  display: grid; place-items: center; font-family: var(--mono); font-size: 11px; color: var(--accent-ink);
+  border: 1px solid var(--accent); background: var(--bg); z-index: 1;
+}
+.steps li::after { content: ""; position: absolute; left: 11px; top: 22px; bottom: 0; width: 1px; background: var(--line2); }
+.steps li:last-child::after { display: none; }
+
+/* bars: mass breakdown and clearances */
+.bars { margin: 0; padding: 0; list-style: none; display: grid; gap: 9px; }
+.bars li { display: grid; grid-template-columns: minmax(120px, 36%) minmax(0, 1fr) 64px; align-items: center; gap: 12px; font-size: 14px; }
 .bars .lbl { color: var(--muted); }
-.bars .track { height: 8px; background: var(--line); position: relative; }
-.bars .fill { position: absolute; inset: 0 auto 0 0; }
+.bars .track { height: 8px; background: var(--line); position: relative; border-radius: 1px; }
+.bars .fill { position: absolute; inset: 0 auto 0 0; border-radius: 1px; }
 .bars .val { font-family: var(--mono); font-size: 13px; text-align: right; font-variant-numeric: tabular-nums; }
-.total { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid var(--line2); margin-top: 12px; padding-top: 10px; }
-.total span { color: var(--muted); font-size: 13.5px; }
-.total b { font-family: var(--display); font-stretch: 112%; font-size: 24px; font-variant-numeric: tabular-nums; }
+.bars--gap .track { height: 6px; }
+.bars--gap .fill { background: #8d939c; }
+.total { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid var(--line2); }
+.total span { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.total b { font-family: var(--display); font-stretch: 112%; font-size: 30px; line-height: 1; font-variant-numeric: tabular-nums; }
 
 /* station map */
-.station { margin: 16px 0 0; }
-.station figcaption { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-.station svg { display: block; width: 100%; height: auto; max-width: 100%; }
+.station { margin: 0; }
+.station figcaption { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.station svg { display: block; width: 100%; height: auto; max-width: 620px; }
 .st-hull { fill: none; stroke: var(--line2); stroke-width: 1; }
 .st-seg-bay { fill: var(--c-bay); }
 .st-seg-bat { fill: var(--c-battery); }
@@ -161,37 +231,69 @@ ul.todo li::before { content: ""; position: absolute; left: 2px; top: 15px; widt
 .st-tick { stroke: var(--faint); stroke-width: 1; }
 .st-scale { font-family: var(--mono); font-size: 7.5px; fill: var(--faint); }
 
-/* clearance table */
-.tbl { overflow-x: auto; margin-top: 8px; }
-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-th, td { text-align: left; padding: 9px 0; border-top: 1px solid var(--line); }
-th { font-family: var(--mono); font-weight: 400; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-td.r, th.r { text-align: right; }
-td .n { font-size: 13.5px; }
+/* speed gauge */
+.gauge-track { position: relative; height: 12px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.gauge-fill { position: absolute; inset: 0 auto 0 0; }
+.gauge-fill.full { width: 90.86%; background: linear-gradient(90deg, rgba(54, 200, 255, .15), rgba(54, 200, 255, .85)); }
+.gauge-fill.nom { width: 80%; background: linear-gradient(90deg, rgba(234, 250, 255, .25), rgba(234, 250, 255, .95)); }
+.gauge-scale { position: relative; height: 18px; margin-top: 6px; font-family: var(--mono); font-size: 11px; color: var(--faint); }
+.gauge-scale span { position: absolute; top: 0; transform: translateX(-50%); }
+.gauge-scale span:first-child { transform: none; }
+.gauge-scale .unit { right: 0; left: auto; transform: none; }
+.sw { display: inline-block; width: 10px; height: 10px; margin-right: 8px; vertical-align: -1px; border-radius: 1px; }
+.sw.nom { background: rgba(234, 250, 255, .95); }
+.sw.full { background: rgba(54, 200, 255, .85); }
+
+/* to-do list */
+ul.todo { margin: 0; padding: 0; list-style: none; display: grid; }
+ul.todo li { border-top: 1px solid var(--line2); padding: 12px 0 12px 26px; position: relative; font-size: 15px; }
+ul.todo li::before { content: ""; position: absolute; left: 2px; top: 18px; width: 10px; height: 10px; border: 1px solid var(--muted); border-radius: 2px; }
+
+/* follow band */
+.cta { border-top: 1px solid var(--line); background: radial-gradient(120% 160% at 0% 0%, rgba(208, 20, 44, .18), transparent 55%), #050506; }
+.cta-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 28px; padding-block: 36px; }
+.cta p { margin: 0; font-size: 16px; color: var(--muted); max-width: 58ch; }
+.cta p b { color: var(--fg); font-weight: 600; }
+.cta-btn {
+  font-family: var(--mono); font-size: 13px; letter-spacing: .06em; text-decoration: none; white-space: nowrap;
+  color: #fff; background: var(--accent); border-radius: 2px; padding: 12px 18px;
+}
+.cta-btn:hover { background: #e3203a; }
 
 /* ---------- footer */
 footer { border-top: 1px solid var(--line); }
 .foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-block: 22px 30px; }
 .foot p { margin: 0; font-family: var(--mono); font-size: 12px; color: var(--faint); }
 
+@media (max-width: 1100px) {
+  .items.c4 { --cols: 2; }
+}
 @media (max-width: 860px) {
-  .sheet { grid-template-columns: minmax(0, 1fr); }
-  .col + .col { margin-top: 34px; }
   .figures { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 18px; }
   .fig:nth-child(3) { border-left: 0; padding-left: 0; }
   .hint { margin-left: 0; width: 100%; }
+  .sec { grid-template-columns: minmax(0, 1fr); padding-block: 30px 34px; }
+  .sec-h { position: static; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
+}
+@media (max-width: 560px) {
+  .items, .items.c4 { --cols: 2; gap: 0 18px; }
+  .item .v { font-size: 19px; }
+  .item .d { font-size: 13.5px; }
+  .panel { padding: 14px; }
+  .frontview { grid-template-columns: minmax(0, 1fr); }
+  .frontview svg { max-width: 290px; margin-inline: auto; }
+  .bars li { grid-template-columns: minmax(0, 1fr) 64px; row-gap: 6px; }
+  .bars .track { grid-column: 1 / -1; order: 3; }
+  .cta-btn { flex: 1 1 100%; text-align: center; }
 }
 @media (max-width: 460px) {
-  dl.spec { grid-template-columns: minmax(0, 1fr); }
-  dl.spec dd { border-top: 0; padding-top: 0; }
-  .bars li { grid-template-columns: minmax(0, 1fr) 58px; }
-  .bars .track { grid-column: 1 / -1; order: 3; }
   /* the station map scales down with the column; keep its labels readable on phones */
   .st-in, .st-in-dark { font-size: 11.5px; }
   .st-lbl { font-size: 12.5px; }
   .st-scale { font-size: 10px; }
   .st-tick { transform: translateY(-2px); }
 }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 @media (prefers-reduced-motion: reduce) { .stamp { transform: none; } }
 </style>
 </head>
@@ -211,8 +313,10 @@ footer { border-top: 1px solid var(--line); }
     <canvas id="scene" aria-label="Interactive 3D model of the SPEED-QUAD TS5"></canvas>
     <div class="loading" id="loading">Loading 3D model…</div>
     <div class="hud" id="hud" hidden><b id="hud-t"></b><span id="hud-d"></span></div>
+    <div class="flowtag" id="flowtag" hidden>Airflow · modeled, not measured</div>
   </div>
   <div class="wrap toolbar" role="toolbar" aria-label="3D view controls">
+    <button id="btn-flow" type="button" aria-pressed="true">Airflow</button>
     <button id="btn-xray" type="button" aria-pressed="false">X-ray</button>
     <button id="btn-spin" type="button" aria-pressed="true">Spin props</button>
     <button id="btn-rotate" type="button" aria-pressed="true">Auto-rotate</button>
@@ -228,90 +332,121 @@ footer { border-top: 1px solid var(--line); }
   <div class="fig"><span class="k">Pitch-speed ceiling</span><span class="v">≈318<small>km/h</small></span><span class="s">25.2 V, theoretical</span></div>
 </section>
 
-<main class="wrap sheet">
-  <div class="col">
-    <section class="block">
-      <h2>Overview</h2>
-      <dl class="spec">
-        <dt>Type</dt><dd>Tail-sitter VTOL quad. Takes off and lands nose-up, then pitches over 90° for horizontal high-speed flight.</dd>
-        <dt>Class</dt><dd>5-inch props, 6S</dd>
-        <dt>Layout</dt><dd>Torpedo fuselage with four fins in an X (<span class="n">45° / 135° / 225° / 315°</span>) and a motor nacelle at each fin tip</dd>
-        <dt>Props</dt><dd>Tractor, at the front of each nacelle</dd>
-        <dt>Launch / recovery</dt><dd>Hand launch and catch, or a ground cradle. The airframe can't stand on its nacelle tips.</dd>
-        <dt>Status</dt><dd>Exterior and internal packaging complete in Fusion 360. Not yet built or flown.</dd>
-      </dl>
-    </section>
-
-    <section class="block">
-      <h2>Dimensions</h2>
-      <dl class="spec">
-        <dt>Overall length</dt><dd><span class="n">360 mm</span></dd>
-        <dt>Span across props</dt><dd><span class="n">≈ 266 mm</span></dd>
-        <dt>Motor to motor</dt><dd><span class="n">196 mm</span> diagonal · <span class="n">138.6 mm</span> adjacent</dd>
-        <dt>Prop disc to prop disc</dt><dd><span class="n">11.6 mm</span> gap</dd>
-        <dt>Prop disc to fuselage</dt><dd><span class="n">5.6 mm</span> gap</dd>
-      </dl>
-      <p class="note">The motors sit on a 98 mm radius, the smallest that keeps at least 5 mm between the 5-inch prop discs and the fuselage.</p>
-    </section>
-
-    <section class="block">
-      <h2>Airframe</h2>
-      <dl class="spec">
-        <dt>Fuselage</dt><dd>Body of revolution following the NACA 4-digit thickness law. <span class="n">Ø62 mm</span> max at 30% of length, fineness ratio <span class="n">5.8</span>. Printed shell, <span class="n">1.5 mm</span> wall.</dd>
-        <dt>Nose cone</dt><dd>Front <span class="n">77 mm</span>, removable for battery loading. <span class="n">Ø15 mm</span> window for the FPV camera.</dd>
-        <dt>Fins ×4</dt><dd>NACA 0012. <span class="n">80 mm</span> root chord, <span class="n">50 mm</span> tip chord, running from the hub out to the nacelle. MAC <span class="n">66.2 mm</span>.</dd>
-        <dt>Nacelles ×4</dt><dd><span class="n">Ø30 × 95 mm</span>. Cylindrical for the front 45%, then a pointed tail cone. <span class="n">1.2 mm</span> wall. The <span class="n">3 mm</span> front wall is also the motor mount (<span class="n">16 × 16 mm</span> M3).</dd>
-        <dt>Structure</dt><dd>One <span class="n">3 mm</span> carbon plate per arm (<span class="n">24 × 76 mm</span>) slotted into a central hub tube (<span class="n">Ø23 / Ø12 mm</span>, <span class="n">40 mm</span> long), covered by printed fairings. Thrust loads the plates edgewise, their stiff direction.</dd>
-      </dl>
-    </section>
-
-    <section class="block">
-      <h2>Avionics</h2>
-      <dl class="spec">
-        <dt>Flight controller</dt><dd><span class="n">20 × 20 mm</span> stack</dd>
-        <dt>GPS</dt><dd>Above the FC, for logging speed runs</dd>
-        <dt>Video</dt><dd>FPV camera (<span class="n">Ø14 mm</span> lens) behind the nose window; VTX in the nose cone</dd>
-        <dt>Receiver</dt><dd>Compact receiver in the nose cone</dd>
-      </dl>
-      <p class="note">Print the nose cone in an RF-transparent material such as PETG or ASA. Carbon-filled filament would block the VTX, receiver and GPS.</p>
-    </section>
-
-    <section class="block">
-      <h2>Not yet done</h2>
-      <ul class="todo">
-        <li>Split the parts for printing and export STLs</li>
-        <li>Carbon plate DXF files</li>
-        <li>Nose-cone latch and battery tray</li>
-        <li>Wiring routes</li>
-        <li>Flight testing</li>
-      </ul>
-    </section>
+<nav class="secnav" aria-label="Spec sheet sections">
+  <div class="wrap secnav-in">
+    <a href="#overview"><span class="no">01</span>Overview</a>
+    <a href="#dimensions"><span class="no">02</span>Dimensions</a>
+    <a href="#propulsion"><span class="no">03</span>Propulsion</a>
+    <a href="#mass"><span class="no">04</span>Mass &amp; balance</a>
+    <a href="#performance"><span class="no">05</span>Performance</a>
+    <a href="#airframe"><span class="no">06</span>Airframe</a>
+    <a href="#avionics"><span class="no">07</span>Avionics</a>
+    <a href="#verification"><span class="no">08</span>CAD check</a>
+    <a href="#next"><span class="no">09</span>Next steps</a>
   </div>
+</nav>
 
-  <div class="col">
-    <section class="block">
-      <h2>Propulsion &amp; power</h2>
-      <dl class="spec">
-        <dt>Motors</dt><dd><span class="n">4 × 2207</span>, <span class="n">1950 KV</span></dd>
-        <dt>Props</dt><dd><span class="n">5 × 5</span> two-blade (<span class="n">127 mm</span> diameter, <span class="n">127 mm</span> pitch)</dd>
-        <dt>Rotation</dt><dd>Seen from the nose: <span class="n">45°</span> and <span class="n">225°</span> counter-clockwise, <span class="n">135°</span> and <span class="n">315°</span> clockwise</dd>
-        <dt>ESCs</dt><dd>Four single ESCs (<span class="n">30 × 13 × 5 mm</span>), one inside each nacelle, so the motor wires are as short as possible</dd>
-        <dt>Battery</dt><dd>6S <span class="n">1300 mAh</span> LiPo, <span class="n">75 × 35 × 40 mm</span>, <span class="n">215 g</span>, in the widest part of the fuselage</dd>
-        <dt>Cooling</dt><dd><span class="n">≈ 137 mm²</span> inlet, <span class="n">≈ 270 mm²</span> exhaust, about twice the inlet</dd>
-      </dl>
-      <ol class="path" aria-label="Cooling air path through each nacelle">
-        <li>Six windows in the front of the motor bell</li>
-        <li>Stator windings</li>
-        <li>Four base vents</li>
-        <li>Holes in the nacelle front wall</li>
-        <li>Past the ESC</li>
-        <li>Out through six tail-cone slots (<span class="n">3.6 × 13.3 mm</span>)</li>
-      </ol>
-    </section>
+<main class="wrap sheet">
+  <section class="sec" id="overview" aria-labelledby="h-overview">
+    <header class="sec-h"><span class="no">01</span><h2 id="h-overview">Overview</h2></header>
+    <div class="sec-b">
+      <div class="items c4">
+        <div class="item span2"><span class="k">Type</span><span class="v">Tail-sitter VTOL quad</span><span class="d">Takes off and lands nose-up, then pitches over 90° for horizontal high-speed flight.</span></div>
+        <div class="item span2"><span class="k">Layout</span><span class="v">Torpedo fuselage, four X fins</span><span class="d">Fins at <span class="n">45° / 135° / 225° / 315°</span>, with a motor nacelle at each fin tip</span></div>
+        <div class="item"><span class="k">Class</span><span class="v">5-inch props, 6S</span></div>
+        <div class="item"><span class="k">Props</span><span class="v">Tractor</span><span class="d">At the front of each nacelle</span></div>
+        <div class="item"><span class="k">Launch / recovery</span><span class="v">Hand or cradle</span><span class="d">Hand launch and catch, or a ground cradle. The airframe can't stand on its nacelle tips.</span></div>
+        <div class="item"><span class="k">Status</span><span class="v">Design study</span><span class="d">Exterior and internal packaging complete in Fusion 360. Not yet built or flown.</span></div>
+      </div>
+    </div>
+  </section>
 
-    <section class="block">
-      <h2>Mass &amp; balance <em>estimated</em></h2>
-      <ul class="bars">
+  <section class="sec" id="dimensions" aria-labelledby="h-dimensions">
+    <header class="sec-h"><span class="no">02</span><h2 id="h-dimensions">Dimensions</h2></header>
+    <div class="sec-b">
+      <div class="items">
+        <div class="item"><span class="k">Overall length</span><span class="v">360<small>mm</small></span><span class="d">Nose tip to tail</span></div>
+        <div class="item"><span class="k">Span across props</span><span class="v">≈ 266<small>mm</small></span></div>
+        <div class="item"><span class="k">Motor to motor</span><span class="v">196<small>mm</small></span><span class="d">Diagonal · <span class="n">138.6 mm</span> adjacent</span></div>
+        <div class="item"><span class="k">Motor radius</span><span class="v">98<small>mm</small></span><span class="d">From the fuselage axis</span></div>
+        <div class="item"><span class="k">Prop disc to prop disc</span><span class="v">11.6<small>mm gap</small></span></div>
+        <div class="item"><span class="k">Prop disc to fuselage</span><span class="v">5.6<small>mm gap</small></span></div>
+      </div>
+      <p class="note">The motors sit on a 98 mm radius, the smallest that keeps at least 5 mm between the 5-inch prop discs and the fuselage.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="propulsion" aria-labelledby="h-propulsion">
+    <header class="sec-h"><span class="no">03</span><h2 id="h-propulsion">Propulsion &amp; power</h2></header>
+    <div class="sec-b">
+      <div class="items c4">
+        <div class="item"><span class="k">Motors</span><span class="v">4 × 2207</span><span class="d">1950 KV</span></div>
+        <div class="item"><span class="k">Props</span><span class="v">5 × 5</span><span class="d">Two-blade, <span class="n">127 mm</span> diameter, <span class="n">127 mm</span> pitch</span></div>
+        <div class="item"><span class="k">Battery</span><span class="v">6S 1300<small>mAh</small></span><span class="d">LiPo, <span class="n">75 × 35 × 40 mm</span>, <span class="n">215 g</span>, in the widest part of the fuselage</span></div>
+        <div class="item"><span class="k">ESCs</span><span class="v">4 × single</span><span class="d"><span class="n">30 × 13 × 5 mm</span>, one inside each nacelle, so the motor wires are as short as possible</span></div>
+      </div>
+      <figure class="panel frontview">
+        <svg viewBox="-140 -140 280 280" role="img" aria-label="Front view seen from the nose: the 45 and 225 degree props turn counter-clockwise, the 135 and 315 degree props clockwise">
+          <circle class="fv-fus" r="31"/>
+          <line class="fv-fin" x1="-8.5" y1="-8.5" x2="-58.7" y2="-58.7"/>
+          <line class="fv-fin" x1="8.5" y1="-8.5" x2="58.7" y2="-58.7"/>
+          <line class="fv-fin" x1="8.5" y1="8.5" x2="58.7" y2="58.7"/>
+          <line class="fv-fin" x1="-8.5" y1="8.5" x2="-58.7" y2="58.7"/>
+          <circle class="fv-disc" cx="-69.3" cy="-69.3" r="63.5"/>
+          <circle class="fv-nac" cx="-69.3" cy="-69.3" r="15"/>
+          <path class="fv-arc" d="M-71.8 -116.2 A47 47 0 0 0 -116.2 -71.8"/>
+          <path class="fv-head" d="M-116.6 -64.8 L-120.7 -72 L-111.7 -71.5 Z"/>
+          <text class="fv-rot" x="-89.8" y="-89.8" text-anchor="middle" dominant-baseline="central">CCW</text>
+          <text class="fv-ang" x="-121" y="-128" text-anchor="middle" dominant-baseline="central">45°</text>
+          <circle class="fv-disc" cx="69.3" cy="-69.3" r="63.5"/>
+          <circle class="fv-nac" cx="69.3" cy="-69.3" r="15"/>
+          <path class="fv-arc" d="M71.8 -116.2 A47 47 0 0 1 116.2 -71.8"/>
+          <path class="fv-head" d="M116.6 -64.8 L120.7 -72 L111.7 -71.5 Z"/>
+          <text class="fv-rot" x="89.8" y="-89.8" text-anchor="middle" dominant-baseline="central">CW</text>
+          <text class="fv-ang" x="121" y="-128" text-anchor="middle" dominant-baseline="central">135°</text>
+          <circle class="fv-disc" cx="69.3" cy="69.3" r="63.5"/>
+          <circle class="fv-nac" cx="69.3" cy="69.3" r="15"/>
+          <path class="fv-arc" d="M71.8 116.2 A47 47 0 0 0 116.2 71.8"/>
+          <path class="fv-head" d="M116.6 64.8 L120.7 72 L111.7 71.5 Z"/>
+          <text class="fv-rot" x="89.8" y="89.8" text-anchor="middle" dominant-baseline="central">CCW</text>
+          <text class="fv-ang" x="121" y="128" text-anchor="middle" dominant-baseline="central">225°</text>
+          <circle class="fv-disc" cx="-69.3" cy="69.3" r="63.5"/>
+          <circle class="fv-nac" cx="-69.3" cy="69.3" r="15"/>
+          <path class="fv-arc" d="M-71.8 116.2 A47 47 0 0 1 -116.2 71.8"/>
+          <path class="fv-head" d="M-116.6 64.8 L-120.7 72 L-111.7 71.5 Z"/>
+          <text class="fv-rot" x="-89.8" y="89.8" text-anchor="middle" dominant-baseline="central">CW</text>
+          <text class="fv-ang" x="-121" y="128" text-anchor="middle" dominant-baseline="central">315°</text>
+        </svg>
+        <figcaption>
+          <p class="panel-h">Prop rotation · seen from the nose</p>
+          <p>The <span class="n">45°</span> and <span class="n">225°</span> props turn counter-clockwise, the <span class="n">135°</span> and <span class="n">315°</span> props clockwise, so each diagonal pair turns the same way.</p>
+          <p class="d">Dashed circles are the 5-inch prop discs. Arm angles are the CAD model's, measured looking forward from the tail, so they appear mirrored in this nose-on view.</p>
+        </figcaption>
+      </figure>
+      <div class="panel">
+        <p class="panel-h">Cooling air path · each nacelle</p>
+        <div class="items c2">
+          <div class="item"><span class="k">Inlet</span><span class="v">≈ 137<small>mm²</small></span></div>
+          <div class="item"><span class="k">Exhaust</span><span class="v">≈ 270<small>mm²</small></span><span class="d">About twice the inlet</span></div>
+        </div>
+        <ol class="steps" aria-label="Cooling air path through each nacelle">
+          <li>Six windows in the front of the motor bell</li>
+          <li>Stator windings</li>
+          <li>Four base vents</li>
+          <li>Holes in the nacelle front wall</li>
+          <li>Past the ESC</li>
+          <li>Out through six tail-cone slots (<span class="n">3.6 × 13.3 mm</span>)</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="mass" aria-labelledby="h-mass">
+    <header class="sec-h"><span class="no">04</span><h2 id="h-mass">Mass &amp; balance</h2><span class="tag">estimated</span></header>
+    <div class="sec-b">
+      <div class="panel">
+        <div class="total"><span>All-up weight</span><b>≈ 689 g</b></div>
+        <ul class="bars">
         <li><span class="lbl">Battery</span><span class="track"><span class="fill" style="width:100%;background:var(--c-battery)"></span></span><span class="val">215 g</span></li>
         <li><span class="lbl">Printed airframe</span><span class="track"><span class="fill" style="width:81%;background:var(--c-airframe)"></span></span><span class="val">174 g</span></li>
         <li><span class="lbl">Motors (4)</span><span class="track"><span class="fill" style="width:59.5%;background:var(--c-motor)"></span></span><span class="val">128 g</span></li>
@@ -321,12 +456,12 @@ footer { border-top: 1px solid var(--line); }
         <li><span class="lbl">ESCs (4)</span><span class="track"><span class="fill" style="width:14.9%;background:var(--c-esc)"></span></span><span class="val">32 g</span></li>
         <li><span class="lbl">Props (4)</span><span class="track"><span class="fill" style="width:9.3%;background:var(--c-prop);outline:1px solid var(--faint)"></span></span><span class="val">20 g</span></li>
       </ul>
-      <div class="total"><span>All-up weight</span><b>≈ 689 g</b></div>
-      <dl class="spec" style="margin-top:12px">
-        <dt>Center of gravity</dt><dd><span class="n">156.2 mm</span> behind the nose tip (43% of length), on the centerline</dd>
-        <dt>Fin aerodynamic center</dt><dd><span class="n">205.7 mm</span> behind the nose tip, <span class="n">49.5 mm</span> behind the CG</dd>
-        <dt>Static margin</dt><dd><span class="n">≈ 75%</span> MAC from the fins alone. The fuselage's destabilizing effect isn't included, so the real margin is lower.</dd>
-      </dl>
+      </div>
+      <div class="items">
+        <div class="item"><span class="k">Center of gravity</span><span class="v">156.2<small>mm</small></span><span class="d">Behind the nose tip (43% of length), on the centerline</span></div>
+        <div class="item"><span class="k">Fin aerodynamic center</span><span class="v">205.7<small>mm</small></span><span class="d">Behind the nose tip, <span class="n">49.5 mm</span> behind the CG</span></div>
+        <div class="item"><span class="k">Static margin</span><span class="v">≈ 75%<small>MAC</small></span><span class="d">From the fins alone. The fuselage's destabilizing effect isn't included, so the real margin is lower.</span></div>
+      </div>
       <figure class="station">
         <figcaption>Station map · mm from the nose tip</figcaption>
         <svg viewBox="0 0 400 96" role="img" aria-label="Station map: nose bay 2 to 76 mm, nose split at 77 mm, battery 78 to 153 mm, CG at 156.2 mm, flight controller 157 to 184 mm, hub 192 to 232 mm, fin aerodynamic center at 205.7 mm, fuselage 360 mm long">
@@ -353,36 +488,94 @@ footer { border-top: 1px solid var(--line); }
         </svg>
       </figure>
       <p class="note">Electronics at catalog mass. Printed parts from CAD volume at 1.20 g/cm³, with the fins at 45% infill. Carbon at 1.60 g/cm³.</p>
-    </section>
+    </div>
+  </section>
 
-    <section class="block">
-      <h2>Performance <em>theoretical</em></h2>
-      <dl class="spec">
-        <dt>Pitch-speed ceiling</dt><dd><span class="n">≈ 280 km/h</span> at 22.2 V (nominal) · <span class="n">≈ 318 km/h</span> at 25.2 V (full charge)</dd>
-      </dl>
-      <p class="note">Assumes loaded rpm is 85% of KV × voltage. Top speed is set by prop pitch × rpm rather than airframe drag, so going faster needs higher-pitch props, higher KV or more voltage. Not flight-tested.</p>
-    </section>
-
-    <section class="block">
-      <h2>CAD verification</h2>
-      <dl class="spec">
-        <dt>Model</dt><dd><span class="n">37</span> bodies, no interference between any of them</dd>
-      </dl>
-      <div class="tbl">
-        <table>
-          <thead><tr><th>Measured minimum clearance</th><th class="r">Gap</th></tr></thead>
-          <tbody>
-            <tr><td>Battery to fuselage shell</td><td class="r"><span class="n">1.35 mm</span></td></tr>
-            <tr><td>Camera lens to nose window</td><td class="r"><span class="n">0.50 mm</span></td></tr>
-            <tr><td>Motor bell to stator</td><td class="r"><span class="n">0.70 mm</span></td></tr>
-            <tr><td>ESC to nacelle wall</td><td class="r"><span class="n">1.00 mm</span></td></tr>
-            <tr><td>Carbon plate to its fuselage slot</td><td class="r"><span class="n">2.23 mm</span></td></tr>
-          </tbody>
-        </table>
+  <section class="sec" id="performance" aria-labelledby="h-performance">
+    <header class="sec-h"><span class="no">05</span><h2 id="h-performance">Performance</h2><span class="tag">theoretical</span></header>
+    <div class="sec-b">
+      <div class="panel">
+        <p class="panel-h">Pitch-speed ceiling</p>
+        <div class="gauge" role="img" aria-label="Pitch-speed ceiling: about 280 km/h at 22.2 volts and about 318 km/h at 25.2 volts, on a 0 to 350 km/h scale">
+          <div class="gauge-track"><span class="gauge-fill full"></span><span class="gauge-fill nom"></span></div>
+          <div class="gauge-scale" aria-hidden="true"><span style="left:0">0</span><span style="left:28.57%">100</span><span style="left:57.14%">200</span><span style="left:85.71%">300</span><span class="unit">km/h</span></div>
+        </div>
+        <div class="items c2">
+          <div class="item"><span class="k"><i class="sw nom"></i>Nominal · 22.2 V</span><span class="v">≈ 280<small>km/h</small></span></div>
+          <div class="item"><span class="k"><i class="sw full"></i>Full charge · 25.2 V</span><span class="v">≈ 318<small>km/h</small></span></div>
+        </div>
       </div>
-    </section>
-  </div>
+      <p class="note">Assumes loaded rpm is 85% of KV × voltage. Top speed is set by prop pitch × rpm rather than airframe drag, so going faster needs higher-pitch props, higher KV or more voltage. Not flight-tested.</p>
+      <p class="note">The airflow in the 3D view comes from a potential-flow model of the fuselage and nacelle pods plus a simple prop-slipstream model. It shows the flow pattern; it is not wind-tunnel or CFD data.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="airframe" aria-labelledby="h-airframe">
+    <header class="sec-h"><span class="no">06</span><h2 id="h-airframe">Airframe</h2></header>
+    <div class="sec-b">
+      <div class="items c2">
+        <div class="item"><span class="k">Fuselage</span><span class="v">Ø62<small>mm</small></span><span class="d">Body of revolution following the NACA 4-digit thickness law, widest at 30% of length, fineness ratio <span class="n">5.8</span>. Printed shell, <span class="n">1.5 mm</span> wall.</span></div>
+        <div class="item"><span class="k">Nose cone</span><span class="v">77<small>mm</small></span><span class="d">The front <span class="n">77 mm</span> comes off for battery loading. <span class="n">Ø15 mm</span> window for the FPV camera.</span></div>
+        <div class="item"><span class="k">Fins ×4</span><span class="v">NACA 0012</span><span class="d"><span class="n">80 mm</span> root and <span class="n">50 mm</span> tip chord, from the hub out to the nacelle. MAC <span class="n">66.2 mm</span>.</span></div>
+        <div class="item"><span class="k">Nacelles ×4</span><span class="v">Ø30 × 95<small>mm</small></span><span class="d">Cylindrical for the front 45%, then a pointed tail cone. <span class="n">1.2 mm</span> wall. The <span class="n">3 mm</span> front wall is also the motor mount (<span class="n">16 × 16 mm</span> M3).</span></div>
+        <div class="item wide"><span class="k">Structure</span><span class="v">3 mm carbon plates</span><span class="d">One per arm (<span class="n">24 × 76 mm</span>), slotted into a central hub tube (<span class="n">Ø23 / Ø12 mm</span>, <span class="n">40 mm</span> long) and covered by printed fairings. Thrust loads the plates edgewise, their stiff direction.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="avionics" aria-labelledby="h-avionics">
+    <header class="sec-h"><span class="no">07</span><h2 id="h-avionics">Avionics</h2></header>
+    <div class="sec-b">
+      <div class="items c4">
+        <div class="item"><span class="k">Flight controller</span><span class="v">20 × 20<small>mm</small></span><span class="d">Stack</span></div>
+        <div class="item"><span class="k">GPS</span><span class="v">Above the FC</span><span class="d">For logging speed runs</span></div>
+        <div class="item"><span class="k">Video</span><span class="v">FPV camera</span><span class="d"><span class="n">Ø14 mm</span> lens behind the nose window; VTX in the nose cone</span></div>
+        <div class="item"><span class="k">Receiver</span><span class="v">Compact</span><span class="d">In the nose cone</span></div>
+      </div>
+      <p class="note">Print the nose cone in an RF-transparent material such as PETG or ASA. Carbon-filled filament would block the VTX, receiver and GPS.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="verification" aria-labelledby="h-verification">
+    <header class="sec-h"><span class="no">08</span><h2 id="h-verification">CAD verification</h2></header>
+    <div class="sec-b">
+      <div class="items c2">
+        <div class="item"><span class="k">Bodies</span><span class="v">37</span><span class="d">In the Fusion 360 model</span></div>
+        <div class="item"><span class="k">Interferences</span><span class="v">0</span><span class="d">Between any two bodies</span></div>
+      </div>
+      <div class="panel">
+        <p class="panel-h">Measured minimum clearance</p>
+        <ul class="bars bars--gap">
+          <li><span class="lbl">Battery to fuselage shell</span><span class="track"><span class="fill" style="width:54%"></span></span><span class="val">1.35 mm</span></li>
+          <li><span class="lbl">Camera lens to nose window</span><span class="track"><span class="fill" style="width:20%"></span></span><span class="val">0.50 mm</span></li>
+          <li><span class="lbl">Motor bell to stator</span><span class="track"><span class="fill" style="width:28%"></span></span><span class="val">0.70 mm</span></li>
+          <li><span class="lbl">ESC to nacelle wall</span><span class="track"><span class="fill" style="width:40%"></span></span><span class="val">1.00 mm</span></li>
+          <li><span class="lbl">Carbon plate to its fuselage slot</span><span class="track"><span class="fill" style="width:89.2%"></span></span><span class="val">2.23 mm</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="next" aria-labelledby="h-next">
+    <header class="sec-h"><span class="no">09</span><h2 id="h-next">Next steps</h2></header>
+    <div class="sec-b">
+      <ul class="todo">
+        <li>Split the parts for printing and export STLs</li>
+        <li>Carbon plate DXF files</li>
+        <li>Nose-cone latch and battery tray</li>
+        <li>Wiring routes</li>
+        <li>Flight testing</li>
+      </ul>
+    </div>
+  </section>
 </main>
+
+<section class="cta" aria-label="Follow the build">
+  <div class="wrap cta-in">
+    <p><b>This airframe hasn't flown yet.</b> Follow the build on Instagram: prints, first flights and speed runs as they happen.</p>
+    <a class="cta-btn" href="https://www.instagram.com/topsecret.aero/" target="_blank" rel="noopener">Follow @topsecret.aero</a>
+  </div>
+</section>
 
 <footer>
   <div class="wrap foot">
@@ -391,6 +584,26 @@ footer { border-top: 1px solid var(--line); }
   </div>
 </footer>
 
+<script>
+// Section nav: highlight the chip of the section in view and keep it scrolled into the chip row.
+(() => {
+  const links = Array.from(document.querySelectorAll('.secnav a'));
+  const row = document.querySelector('.secnav-in');
+  if (!links.length || !('IntersectionObserver' in window)) return;
+  const byId = new Map(links.map(a => [a.hash.slice(1), a]));
+  const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const io = new IntersectionObserver(entries => {
+    for (const e of entries) {
+      const a = e.isIntersecting && byId.get(e.target.id);
+      if (!a || a.hasAttribute('aria-current')) continue;
+      links.forEach(l => l.removeAttribute('aria-current'));
+      a.setAttribute('aria-current', 'location');
+      row.scrollTo({ left: a.offsetLeft - (row.clientWidth - a.offsetWidth) / 2, behavior: smooth ? 'smooth' : 'auto' });
+    }
+  }, { rootMargin: '-35% 0px -60% 0px' });
+  document.querySelectorAll('.sheet .sec').forEach(s => io.observe(s));
+})();
+</script>
 <script type="importmap">
 { "imports": {
   "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
@@ -408,6 +621,7 @@ const loading = document.getElementById('loading');
 const hud = document.getElementById('hud');
 const hudT = document.getElementById('hud-t');
 const hudD = document.getElementById('hud-d');
+const flowTag = document.getElementById('flowtag');
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function fail(msg) { loading.textContent = msg; loading.hidden = false; }
@@ -537,12 +751,150 @@ function resetView() {
   controls.update();
 }
 
+// ---------- airflow
+// Streamlines from webtools/flow_lines.py (potential flow around the fuselage and nacelle pods plus prop
+// slipstream). Each line is drawn as a thin screen-space ribbon; pulses travel along it at the local
+// flow speed (tau = time of flight), so they bunch up where the air slows and stretch where it speeds up.
+const FLOW_SPEED = 260;                       // tau units (mm at freestream speed) per second
+const flowU = {
+  uTime: { value: 100 },
+  uRes: { value: new THREE.Vector2(1, 1) },
+  uWidth: { value: 1.35 * renderer.getPixelRatio() },
+  uPeriod: { value: 150 },
+  uTail: { value: 0.42 },
+  uBase: { value: 0.06 },
+  uSlow: { value: new THREE.Vector3(0.16, 0.36, 1.0) },
+  uMid: { value: new THREE.Vector3(0.21, 0.78, 1.0) },
+  uFast: { value: new THREE.Vector3(0.92, 0.98, 1.0) },
+};
+const flowMat = new THREE.ShaderMaterial({
+  uniforms: flowU,
+  transparent: true,
+  depthWrite: false,
+  side: THREE.DoubleSide,
+  blending: THREE.AdditiveBlending,
+  vertexShader: `
+    attribute vec3 aPrev;
+    attribute vec3 aNext;
+    attribute float aSide;
+    attribute float aTau;
+    attribute float aSpd;
+    attribute float aFade;
+    uniform vec2 uRes;
+    uniform float uWidth;
+    varying float vTau;
+    varying float vSpd;
+    varying float vFade;
+    varying float vSide;
+    void main() {
+      mat4 pvm = projectionMatrix * modelViewMatrix;
+      vec4 c = pvm * vec4(position, 1.0);
+      vec4 a = pvm * vec4(aPrev, 1.0);
+      vec4 b = pvm * vec4(aNext, 1.0);
+      vec2 asp = vec2(uRes.x / uRes.y, 1.0);
+      vec2 d = (b.xy / b.w - a.xy / a.w) * asp;
+      float l = length(d);
+      d = l > 1e-6 ? d / l : vec2(1.0, 0.0);
+      c.xy += vec2(-d.y, d.x) / asp * aSide * uWidth / uRes.y * c.w;
+      gl_Position = c;
+      vTau = aTau; vSpd = aSpd; vFade = aFade; vSide = aSide;
+    }`,
+  fragmentShader: `
+    uniform float uTime;
+    uniform float uPeriod;
+    uniform float uTail;
+    uniform float uBase;
+    uniform vec3 uSlow;
+    uniform vec3 uMid;
+    uniform vec3 uFast;
+    varying float vTau;
+    varying float vSpd;
+    varying float vFade;
+    varying float vSide;
+    void main() {
+      float u = fract((uTime - vTau) / uPeriod);           // 0 at a pulse head, growing toward its tail
+      float k = clamp(1.0 - u / uTail, 0.0, 1.0);
+      vec3 col = mix(uSlow, uMid, smoothstep(0.80, 1.0, vSpd));
+      col = mix(col, uFast, smoothstep(1.03, 1.30, vSpd));
+      col = mix(col, vec3(1.0), 0.5 * pow(k, 8.0));
+      float a = (uBase + (1.0 - uBase) * k * k) * vFade * (1.0 - smoothstep(0.45, 1.0, abs(vSide)));
+      gl_FragColor = vec4(col, a);
+    }`,
+});
+let flowMesh = null;
+
+function buildFlow(doc, floorY) {
+  const P = new Int16Array(bytes(doc.pos));
+  const T = new Uint16Array(bytes(doc.tau));
+  const S = new Uint8Array(bytes(doc.spd));
+  const qp = doc.q_pos, qt = doc.q_tau;
+  const lines = [];                                   // [first point, count], skipping lines under the stage
+  let first = 0;
+  for (const n of doc.counts) {
+    let ok = true;
+    for (let i = first; i < first + n && ok; i++) ok = P[i * 3 + 1] * qp > floorY + 6;
+    if (ok) lines.push([first, n]);
+    first += n;
+  }
+  let nPts = 0, nSeg = 0;
+  for (const [, n] of lines) { nPts += n; nSeg += n - 1; }
+  const pos = new Float32Array(nPts * 6), prev = new Float32Array(nPts * 6), next = new Float32Array(nPts * 6);
+  const side = new Float32Array(nPts * 2), tau = new Float32Array(nPts * 2);
+  const spd = new Float32Array(nPts * 2), fade = new Float32Array(nPts * 2);
+  const index = new Uint32Array(nSeg * 6);
+  const put = (arr, v, j) => { arr[v * 3] = P[j * 3] * qp; arr[v * 3 + 1] = P[j * 3 + 1] * qp; arr[v * 3 + 2] = P[j * 3 + 2] * qp; };
+  let v = 0, e = 0;
+  for (const [s, n] of lines) {
+    const tEnd = T[s + n - 1] * qt;
+    const r0 = Math.hypot(P[s * 3 + 1], P[s * 3 + 2]) * qp;    // seed radius: fade the outer lines out
+    const rf = Math.min(1, Math.max(0, (150 - r0) / 45));
+    for (let i = 0; i < n; i++) {
+      const j = s + i, t = T[j] * qt;
+      const f = rf * Math.min(1, t / 60) * Math.min(1, Math.max(0, tEnd - t) / 90);
+      for (let k = 0; k < 2; k++, v++) {
+        put(pos, v, j);
+        put(prev, v, s + Math.max(i - 1, 0));
+        put(next, v, s + Math.min(i + 1, n - 1));
+        side[v] = k ? 1 : -1;
+        tau[v] = t;
+        spd[v] = S[j] / 100;
+        fade[v] = f;
+      }
+      if (i < n - 1) {                                // quad between this point's pair and the next one's
+        const a = v - 2;
+        index[e++] = a; index[e++] = v; index[e++] = a + 1;
+        index[e++] = a + 1; index[e++] = v; index[e++] = v + 1;
+      }
+    }
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  g.setAttribute('aPrev', new THREE.BufferAttribute(prev, 3));
+  g.setAttribute('aNext', new THREE.BufferAttribute(next, 3));
+  g.setAttribute('aSide', new THREE.BufferAttribute(side, 1));
+  g.setAttribute('aTau', new THREE.BufferAttribute(tau, 1));
+  g.setAttribute('aSpd', new THREE.BufferAttribute(spd, 1));
+  g.setAttribute('aFade', new THREE.BufferAttribute(fade, 1));
+  g.setIndex(new THREE.BufferAttribute(index, 1));
+  flowMesh = new THREE.Mesh(g, flowMat);
+  flowMesh.frustumCulled = false;                     // the shader widens the ribbons after culling
+  scene.add(flowMesh);                                // not in `group`, so part picking ignores it
+}
+
+function loadFlow(floorY) {
+  fetch('flow.json')
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(doc => { buildFlow(doc, floorY); apply(); })
+    .catch(() => { btn.flow.hidden = true; flowTag.hidden = true; });
+}
+
 function resize() {
   const w = viewer.clientWidth, h = viewer.clientHeight;
   if (!w || !h) return;
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
+  renderer.getDrawingBufferSize(flowU.uRes.value);
 }
 new ResizeObserver(resize).observe(viewer);
 resize();
@@ -602,12 +954,14 @@ fetch('model.json')
     addStage(box);
     resetView();
     loading.hidden = true;
+    loadFlow(box.min.y - 30);
   })
   .catch(() => fail("Couldn't load the 3D model. Reload the page to try again."));
 
 // ---------- controls
-const state = { xray: false, spin: !reduce, rotate: !reduce };
+const state = { flow: true, xray: false, spin: !reduce, rotate: !reduce };
 const btn = {
+  flow: document.getElementById('btn-flow'),
   xray: document.getElementById('btn-xray'),
   spin: document.getElementById('btn-spin'),
   rotate: document.getElementById('btn-rotate'),
@@ -620,6 +974,8 @@ function apply() {
   m.needsUpdate = true;
   shells.forEach(s => { s.castShadow = !state.xray; });
   controls.autoRotate = state.rotate;
+  if (flowMesh) flowMesh.visible = state.flow;
+  flowTag.hidden = !(state.flow && flowMesh);
   for (const k of Object.keys(btn)) btn[k].setAttribute('aria-pressed', String(state[k]));
 }
 for (const k of Object.keys(btn)) btn[k].addEventListener('click', () => { state[k] = !state[k]; apply(); });
@@ -664,6 +1020,7 @@ const SPIN = Math.PI * 2 * 2.4;
 renderer.setAnimationLoop(() => {
   const dt = Math.min(clock.getDelta(), 0.05);
   if (state.spin) for (const p of props) p.mesh.rotation.x += p.dir * SPIN * dt;
+  if (state.flow && !reduce) flowU.uTime.value = (flowU.uTime.value + FLOW_SPEED * dt) % flowU.uPeriod.value;
   controls.update();
   renderer.render(scene, camera);
 });

@@ -10,6 +10,7 @@ By **Top Secret Aero** · Instagram [@topsecret.aero](https://www.instagram.com/
 | --- | --- |
 | `index.html` | The whole site: the spec sheet and the three.js viewer. three.js and the fonts load from public CDNs. |
 | `model.json` | The airframe's 37 parts, exported from the Fusion 360 model (2.4 MB). |
+| `flow.json` | Airflow streamlines for the 3D view (110 KB): a potential-flow model of the fuselage and nacelle pods plus a prop-slipstream model. It shows the flow pattern; it is not CFD. |
 
 There is no build step. In `model.json`, each part holds base64-encoded float32 positions in millimetres (three.js Y-up), int8 normals and uint16/uint32 triangle indices.
 
