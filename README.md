@@ -1,6 +1,6 @@
 # SPEED-QUAD TS5
 
-Interactive 3D model and spec sheet of the **SPEED-QUAD TS5**, a 5-inch, 6S tail-sitter quad built for straight-line speed. It is a design study modeled in Fusion 360 and has not yet been built or flown.
+Interactive 3D model and spec sheet of the **SPEED-QUAD TS5**, a 5-inch, 6S tail-sitter quad built for straight-line speed, with a fully 3D-printed airframe (rev. v4.1). It is a design study modeled in Fusion 360 and has not yet been printed or flown.
 
 By **Top Secret Aero** · Instagram [@topsecret.aero](https://www.instagram.com/topsecret.aero/)
 
@@ -9,8 +9,8 @@ By **Top Secret Aero** · Instagram [@topsecret.aero](https://www.instagram.com/
 | File | Contents |
 | --- | --- |
 | `index.html` | The whole site: the spec sheet and the three.js viewer. three.js and the fonts load from public CDNs. |
-| `model.json` | The airframe's 37 parts, exported from the Fusion 360 model (2.4 MB). |
-| `flow.json` | Airflow streamlines for the 3D view (110 KB): a potential-flow model of the fuselage and nacelle pods plus a prop-slipstream model. It shows the flow pattern; it is not CFD. |
+| `model.json` | The airframe's 32 parts, exported from the Fusion 360 model (2.9 MB). |
+| `flow.json` | Airflow streamlines for the 3D view (100 KB): a potential-flow model of the fuselage and nacelle pods plus a prop-slipstream model. It shows the flow pattern; it is not CFD. |
 
 There is no build step. In `model.json`, each part holds base64-encoded float32 positions in millimetres (three.js Y-up), int8 normals and uint16/uint32 triangle indices.
 

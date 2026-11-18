@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SPEED-QUAD TS5</title>
-<meta name="description" content="Spec sheet and interactive 3D model of the SPEED-QUAD TS5, a 5-inch 6S tail-sitter speed quad designed in Fusion 360.">
+<meta name="description" content="Spec sheet and interactive 3D model of the SPEED-QUAD TS5, a 5-inch 6S tail-sitter speed quad with a fully 3D-printed airframe, designed in Fusion 360.">
 <meta name="theme-color" content="#000000">
 <meta property="og:type" content="website">
 <meta property="og:title" content="SPEED-QUAD TS5">
-<meta property="og:description" content="Spec sheet and interactive 3D model of the SPEED-QUAD TS5, a 5-inch 6S tail-sitter speed quad designed in Fusion 360.">
+<meta property="og:description" content="Spec sheet and interactive 3D model of the SPEED-QUAD TS5, a 5-inch 6S tail-sitter speed quad with a fully 3D-printed airframe, designed in Fusion 360.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23000'/%3E%3Cpath d='M8 8 24 24M24 8 8 24' stroke='%23d0142c' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='4.5' fill='%23e7e9ec'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -221,7 +221,8 @@ h2 {
 .st-seg-bay { fill: var(--c-bay); }
 .st-seg-bat { fill: var(--c-battery); }
 .st-seg-fc { fill: var(--c-avionics); }
-.st-seg-hub { fill: var(--c-carbon); }
+.st-seg-web { fill: var(--c-carbon); }
+.st-hatch { fill: var(--muted); }
 .st-split { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 2 2; }
 .st-in { font-family: var(--mono); font-size: 8.5px; fill: var(--fg); }
 .st-in-dark { font-family: var(--mono); font-size: 8.5px; fill: var(--bg); }
@@ -304,8 +305,8 @@ footer { border-top: 1px solid var(--line); }
     <a class="ig" href="https://www.instagram.com/topsecret.aero/" target="_blank" rel="noopener">Instagram <b>@topsecret.aero</b></a>
   </div>
   <h1>SPEED-QUAD TS5</h1>
-  <p class="lede">A 5-inch, 6S tail-sitter quad built for straight-line speed. It takes off nose-up, pitches over 90° and flies on four X-pattern fins, with a motor nacelle at the tip of each fin.</p>
-  <p class="status">Design study · Fusion 360 · rev. v3 · not yet built or flown</p>
+  <p class="lede">A 5-inch, 6S tail-sitter quad built for straight-line speed, with a fully 3D-printed airframe. It takes off nose-up, pitches over 90° and flies on four X-pattern fins, with a motor nacelle at the tip of each fin.</p>
+  <p class="status">Design study · Fusion 360 · rev. v4.1 · print files ready, not yet printed or flown</p>
 </header>
 
 <section class="bay" aria-label="3D model">
@@ -328,7 +329,7 @@ footer { border-top: 1px solid var(--line); }
 <section class="wrap figures" aria-label="Key figures">
   <div class="fig"><span class="k">Length</span><span class="v">360<small>mm</small></span><span class="s">nose tip to tail</span></div>
   <div class="fig"><span class="k">Span</span><span class="v">≈266<small>mm</small></span><span class="s">across prop discs</span></div>
-  <div class="fig"><span class="k">All-up weight</span><span class="v">≈689<small>g</small></span><span class="s">estimated, 6S 1300 mAh</span></div>
+  <div class="fig"><span class="k">All-up weight</span><span class="v">≈761<small>g</small></span><span class="s">estimated, 6S 1300 mAh</span></div>
   <div class="fig"><span class="k">Pitch-speed ceiling</span><span class="v">≈318<small>km/h</small></span><span class="s">25.2 V, theoretical</span></div>
 </section>
 
@@ -340,9 +341,10 @@ footer { border-top: 1px solid var(--line); }
     <a href="#mass"><span class="no">04</span>Mass &amp; balance</a>
     <a href="#performance"><span class="no">05</span>Performance</a>
     <a href="#airframe"><span class="no">06</span>Airframe</a>
-    <a href="#avionics"><span class="no">07</span>Avionics</a>
-    <a href="#verification"><span class="no">08</span>CAD check</a>
-    <a href="#next"><span class="no">09</span>Next steps</a>
+    <a href="#printing"><span class="no">07</span>Printing</a>
+    <a href="#avionics"><span class="no">08</span>Avionics</a>
+    <a href="#verification"><span class="no">09</span>CAD check</a>
+    <a href="#next"><span class="no">10</span>Next steps</a>
   </div>
 </nav>
 
@@ -356,7 +358,7 @@ footer { border-top: 1px solid var(--line); }
         <div class="item"><span class="k">Class</span><span class="v">5-inch props, 6S</span></div>
         <div class="item"><span class="k">Props</span><span class="v">Tractor</span><span class="d">At the front of each nacelle</span></div>
         <div class="item"><span class="k">Launch / recovery</span><span class="v">Hand or cradle</span><span class="d">Hand launch and catch, or a ground cradle. The airframe can't stand on its nacelle tips.</span></div>
-        <div class="item"><span class="k">Status</span><span class="v">Design study</span><span class="d">Exterior and internal packaging complete in Fusion 360. Not yet built or flown.</span></div>
+        <div class="item"><span class="k">Status</span><span class="v">Print-ready design</span><span class="d">Fully 3D-printable airframe and internal layout complete in Fusion 360, print files exported. Not yet printed or flown.</span></div>
       </div>
     </div>
   </section>
@@ -382,8 +384,8 @@ footer { border-top: 1px solid var(--line); }
       <div class="items c4">
         <div class="item"><span class="k">Motors</span><span class="v">4 × 2207</span><span class="d">1950 KV</span></div>
         <div class="item"><span class="k">Props</span><span class="v">5 × 5</span><span class="d">Two-blade, <span class="n">127 mm</span> diameter, <span class="n">127 mm</span> pitch</span></div>
-        <div class="item"><span class="k">Battery</span><span class="v">6S 1300<small>mAh</small></span><span class="d">LiPo, <span class="n">75 × 35 × 40 mm</span>, <span class="n">215 g</span>, in the widest part of the fuselage</span></div>
-        <div class="item"><span class="k">ESCs</span><span class="v">4 × single</span><span class="d"><span class="n">30 × 13 × 5 mm</span>, one inside each nacelle, so the motor wires are as short as possible</span></div>
+        <div class="item"><span class="k">Battery</span><span class="v">6S 1300<small>mAh</small></span><span class="d">LiPo, <span class="n">75 × 35 × 40 mm</span>, <span class="n">215 g</span>, loads from the top under the long hatch</span></div>
+        <div class="item"><span class="k">ESC</span><span class="v">4-in-1, 20 × 20</span><span class="d">Soft-mounted under the flight controller. Motor wires run through a channel inside each fin.</span></div>
       </div>
       <figure class="panel frontview">
         <svg viewBox="-140 -140 280 280" role="img" aria-label="Front view seen from the nose: the 45 and 225 degree props turn counter-clockwise, the 135 and 315 degree props clockwise">
@@ -433,9 +435,20 @@ footer { border-top: 1px solid var(--line); }
           <li>Six windows in the front of the motor bell</li>
           <li>Stator windings</li>
           <li>Four base vents</li>
-          <li>Holes in the nacelle front wall</li>
-          <li>Past the ESC</li>
+          <li>Holes in the <span class="n">4 mm</span> nacelle front wall</li>
           <li>Out through six tail-cone slots (<span class="n">3.6 × 13.3 mm</span>)</li>
+        </ol>
+      </div>
+      <div class="panel">
+        <p class="panel-h">Cooling air path · electronics bay</p>
+        <div class="items c2">
+          <div class="item"><span class="k">Inlet</span><span class="v">≈ 116<small>mm²</small></span><span class="d">Two NACA flush inlets</span></div>
+          <div class="item"><span class="k">Exhaust</span><span class="v">≈ 120<small>mm²</small></span><span class="d">Hatch slots and the tail hole</span></div>
+        </div>
+        <ol class="steps" aria-label="Cooling air path through the electronics bay">
+          <li>NACA flush inlet on each side of the fuselage (<span class="n">7°</span> ramp, <span class="n">17 mm</span> throat)</li>
+          <li>Into the bay beside the 4-in-1 ESC and flight controller</li>
+          <li>Out through two slots in the hatch and the <span class="n">Ø8 mm</span> tail hole</li>
         </ol>
       </div>
     </div>
@@ -445,41 +458,41 @@ footer { border-top: 1px solid var(--line); }
     <header class="sec-h"><span class="no">04</span><h2 id="h-mass">Mass &amp; balance</h2><span class="tag">estimated</span></header>
     <div class="sec-b">
       <div class="panel">
-        <div class="total"><span>All-up weight</span><b>≈ 689 g</b></div>
+        <div class="total"><span>All-up weight</span><b>≈ 761 g</b></div>
         <ul class="bars">
-        <li><span class="lbl">Battery</span><span class="track"><span class="fill" style="width:100%;background:var(--c-battery)"></span></span><span class="val">215 g</span></li>
-        <li><span class="lbl">Printed airframe</span><span class="track"><span class="fill" style="width:81%;background:var(--c-airframe)"></span></span><span class="val">174 g</span></li>
-        <li><span class="lbl">Motors (4)</span><span class="track"><span class="fill" style="width:59.5%;background:var(--c-motor)"></span></span><span class="val">128 g</span></li>
-        <li><span class="lbl">Avionics</span><span class="track"><span class="fill" style="width:23.3%;background:var(--c-avionics)"></span></span><span class="val">50 g</span></li>
-        <li><span class="lbl">Carbon plates (4)</span><span class="track"><span class="fill" style="width:16.3%;background:var(--c-carbon)"></span></span><span class="val">35 g</span></li>
-        <li><span class="lbl">Wiring &amp; misc</span><span class="track"><span class="fill" style="width:16.3%;background:var(--c-wiring)"></span></span><span class="val">35 g</span></li>
-        <li><span class="lbl">ESCs (4)</span><span class="track"><span class="fill" style="width:14.9%;background:var(--c-esc)"></span></span><span class="val">32 g</span></li>
-        <li><span class="lbl">Props (4)</span><span class="track"><span class="fill" style="width:9.3%;background:var(--c-prop);outline:1px solid var(--faint)"></span></span><span class="val">20 g</span></li>
+        <li><span class="lbl">Printed airframe</span><span class="track"><span class="fill" style="width:100%;background:var(--c-airframe)"></span></span><span class="val">291 g</span></li>
+        <li><span class="lbl">Battery</span><span class="track"><span class="fill" style="width:73.8%;background:var(--c-battery)"></span></span><span class="val">215 g</span></li>
+        <li><span class="lbl">Motors (4)</span><span class="track"><span class="fill" style="width:44%;background:var(--c-motor)"></span></span><span class="val">128 g</span></li>
+        <li><span class="lbl">Electronics</span><span class="track"><span class="fill" style="width:20.3%;background:var(--c-avionics)"></span></span><span class="val">59 g</span></li>
+        <li><span class="lbl">Wiring, XT60 &amp; screws</span><span class="track"><span class="fill" style="width:16.5%;background:var(--c-wiring)"></span></span><span class="val">48 g</span></li>
+        <li><span class="lbl">Props (4)</span><span class="track"><span class="fill" style="width:6.9%;background:var(--c-prop);outline:1px solid var(--faint)"></span></span><span class="val">20 g</span></li>
       </ul>
       </div>
       <div class="items">
-        <div class="item"><span class="k">Center of gravity</span><span class="v">156.2<small>mm</small></span><span class="d">Behind the nose tip (43% of length), on the centerline</span></div>
-        <div class="item"><span class="k">Fin aerodynamic center</span><span class="v">205.7<small>mm</small></span><span class="d">Behind the nose tip, <span class="n">49.5 mm</span> behind the CG</span></div>
-        <div class="item"><span class="k">Static margin</span><span class="v">≈ 75%<small>MAC</small></span><span class="d">From the fins alone. The fuselage's destabilizing effect isn't included, so the real margin is lower.</span></div>
+        <div class="item"><span class="k">Center of gravity</span><span class="v">156.7<small>mm</small></span><span class="d">Behind the nose tip (43.5% of length), on the centerline</span></div>
+        <div class="item"><span class="k">Fin aerodynamic center</span><span class="v">201.0<small>mm</small></span><span class="d">Behind the nose tip, <span class="n">44.3 mm</span> behind the CG</span></div>
+        <div class="item"><span class="k">Static margin</span><span class="v">≈ 73%<small>MAC</small></span><span class="d">From the fins alone (MAC <span class="n">60.5 mm</span>). The fuselage's destabilizing effect isn't included, so the real margin is lower.</span></div>
       </div>
       <figure class="station">
         <figcaption>Station map · mm from the nose tip</figcaption>
-        <svg viewBox="0 0 400 96" role="img" aria-label="Station map: nose bay 2 to 76 mm, nose split at 77 mm, battery 78 to 153 mm, CG at 156.2 mm, flight controller 157 to 184 mm, hub 192 to 232 mm, fin aerodynamic center at 205.7 mm, fuselage 360 mm long">
+        <svg viewBox="0 0 400 96" role="img" aria-label="Station map: nose bay 2 to 76 mm, nose split at 77 mm, top hatch 77 to 184 mm, battery 78 to 153 mm, CG at 156.7 mm, ESC and flight-controller stack 155 to 185 mm, fin aerodynamic center at 201 mm, internal X-web 219 to 272 mm, fuselage 360 mm long">
           <rect class="st-hull" x="20" y="34" width="360" height="22" rx="6"/>
+          <rect class="st-hatch" x="97" y="28.5" width="107" height="2.5"/>
           <rect class="st-seg-bay" x="22" y="37" width="74" height="16"/>
           <rect class="st-seg-bat" x="98" y="37" width="75" height="16"/>
-          <rect class="st-seg-fc" x="177" y="37" width="27" height="16"/>
-          <rect class="st-seg-hub" x="212" y="37" width="40" height="16"/>
+          <rect class="st-seg-fc" x="175" y="37" width="30" height="16"/>
+          <rect class="st-seg-web" x="239" y="37" width="53" height="16"/>
           <line class="st-split" x1="97" y1="30" x2="97" y2="60"/>
           <text class="st-in" x="59" y="48" text-anchor="middle">nose bay</text>
           <text class="st-in-dark" x="135.5" y="48" text-anchor="middle">battery</text>
-          <text class="st-in" x="190.5" y="48" text-anchor="middle">FC</text>
-          <text class="st-in" x="232" y="48" text-anchor="middle">hub</text>
-          <path class="st-cg" d="M172.2 24 L180.2 24 L176.2 31 Z"/>
-          <text class="st-lbl" x="176.2" y="19" text-anchor="middle">CG 156.2</text>
-          <path class="st-ac" d="M221.7 66 L229.7 66 L225.7 59 Z"/>
-          <text class="st-lbl" x="225.7" y="76" text-anchor="middle">fin AC 205.7</text>
-          <text class="st-lbl" x="97" y="19" text-anchor="middle">split 77</text>
+          <text class="st-in" x="190" y="48" text-anchor="middle">FC</text>
+          <text class="st-in" x="265.5" y="48" text-anchor="middle">X-web</text>
+          <text class="st-lbl" x="125" y="24.5" text-anchor="middle">top hatch</text>
+          <path class="st-cg" d="M172.7 15 L180.7 15 L176.7 22 Z"/>
+          <text class="st-lbl" x="176.7" y="11" text-anchor="middle">CG 156.7</text>
+          <path class="st-ac" d="M217 66 L225 66 L221 59 Z"/>
+          <text class="st-lbl" x="221" y="76" text-anchor="middle">fin AC 201.0</text>
+          <text class="st-lbl" x="97" y="11" text-anchor="middle">split 77</text>
           <line class="st-tick" x1="20" y1="84" x2="20" y2="88"/><text class="st-scale" x="20" y="95" text-anchor="middle">0</text>
           <line class="st-tick" x1="120" y1="84" x2="120" y2="88"/><text class="st-scale" x="120" y="95" text-anchor="middle">100</text>
           <line class="st-tick" x1="220" y1="84" x2="220" y2="88"/><text class="st-scale" x="220" y="95" text-anchor="middle">200</text>
@@ -487,7 +500,7 @@ footer { border-top: 1px solid var(--line); }
           <line class="st-tick" x1="380" y1="84" x2="380" y2="88"/><text class="st-scale" x="380" y="95" text-anchor="middle">360</text>
         </svg>
       </figure>
-      <p class="note">Electronics at catalog mass. Printed parts from CAD volume at 1.20 g/cm³, with the fins at 45% infill. Carbon at 1.60 g/cm³.</p>
+      <p class="note">Electronics at catalog mass. Printed parts from CAD volume at 1.27 g/cm³ (PETG), with the exposed fins at 45% density (4 walls, 20% infill): main body 217 g, nose cone 30 g, four nacelle tail cones 25 g, hatch 13 g, tail cone 6 g.</p>
     </div>
   </section>
 
@@ -514,57 +527,79 @@ footer { border-top: 1px solid var(--line); }
     <header class="sec-h"><span class="no">06</span><h2 id="h-airframe">Airframe</h2></header>
     <div class="sec-b">
       <div class="items c2">
-        <div class="item"><span class="k">Fuselage</span><span class="v">Ø62<small>mm</small></span><span class="d">Body of revolution following the NACA 4-digit thickness law, widest at 30% of length, fineness ratio <span class="n">5.8</span>. Printed shell, <span class="n">1.5 mm</span> wall.</span></div>
-        <div class="item"><span class="k">Nose cone</span><span class="v">77<small>mm</small></span><span class="d">The front <span class="n">77 mm</span> comes off for battery loading. <span class="n">Ø15 mm</span> window for the FPV camera.</span></div>
-        <div class="item"><span class="k">Fins ×4</span><span class="v">NACA 0012</span><span class="d"><span class="n">80 mm</span> root and <span class="n">50 mm</span> tip chord, from the hub out to the nacelle. MAC <span class="n">66.2 mm</span>.</span></div>
-        <div class="item"><span class="k">Nacelles ×4</span><span class="v">Ø30 × 95<small>mm</small></span><span class="d">Cylindrical for the front 45%, then a pointed tail cone. <span class="n">1.2 mm</span> wall. The <span class="n">3 mm</span> front wall is also the motor mount (<span class="n">16 × 16 mm</span> M3).</span></div>
-        <div class="item wide"><span class="k">Structure</span><span class="v">3 mm carbon plates</span><span class="d">One per arm (<span class="n">24 × 76 mm</span>), slotted into a central hub tube (<span class="n">Ø23 / Ø12 mm</span>, <span class="n">40 mm</span> long) and covered by printed fairings. Thrust loads the plates edgewise, their stiff direction.</span></div>
+        <div class="item wide"><span class="k">Structure</span><span class="v">100% printed, no carbon</span><span class="d">The main body is one print: fuselage, all four fins and the nacelle fronts. An internal X-web (<span class="n">3.5 mm</span>) ties opposite fins together, and a web inside each nacelle carries thrust from the motor wall into the fin.</span></div>
+        <div class="item"><span class="k">Fuselage</span><span class="v">Ø62<small>mm</small></span><span class="d">Body of revolution following the NACA 4-digit thickness law, widest at 30% of length, fineness ratio <span class="n">5.8</span>, with a <span class="n">1.6 mm</span> printed wall.</span></div>
+        <div class="item"><span class="k">Top hatch</span><span class="v">107<small>mm</small></span><span class="d">Covers the battery and the stack. The front lip hooks under the nose cone and one M2 screw holds the rear, so the battery drops straight in from the top.</span></div>
+        <div class="item"><span class="k">Fins ×4</span><span class="v">NACA 0030 → 0015</span><span class="d">Flared root and a concave trailing edge: chord <span class="n">101 mm</span> at the root down to <span class="n">45 mm</span> at the nacelle, MAC <span class="n">60.5 mm</span>. A channel inside each fin carries the motor wires.</span></div>
+        <div class="item"><span class="k">Arm stiffness</span><span class="v">≈ 175<small>Hz</small></span><span class="d">First bending mode of one arm in PETG, from a beam model; about <span class="n">290 Hz</span> in carbon-filled nylon. The carbon-plate v3 arm modeled at <span class="n">138 Hz</span>.</span></div>
+        <div class="item"><span class="k">Nacelles ×4</span><span class="v">Ø30 × 95<small>mm</small></span><span class="d">The pointed tail cone comes off (one M2 screw) for hex-key access to the motor screws. <span class="n">4 mm</span> motor wall (<span class="n">16 × 16 mm</span> M3), <span class="n">1.6 mm</span> skin.</span></div>
+        <div class="item"><span class="k">NACA inlets ×2</span><span class="v">7°<small>ramp</small></span><span class="d">Flush inlets on both sides of the fuselage, <span class="n">41 mm</span> long with a <span class="n">17 × 5 mm</span> throat, feeding the electronics bay.</span></div>
+        <div class="item"><span class="k">Nose cone</span><span class="v">77<small>mm</small></span><span class="d">Holds the FPV camera (<span class="n">Ø15 mm</span> window), VTX and receiver. Slides over three fingers and takes two M3 screws. It stays on for battery swaps.</span></div>
       </div>
+    </div>
+  </section>
+
+  <section class="sec" id="printing" aria-labelledby="h-printing">
+    <header class="sec-h"><span class="no">07</span><h2 id="h-printing">Printing</h2><span class="tag">5 parts · 8 prints</span></header>
+    <div class="sec-b">
+      <div class="items c2">
+        <div class="item"><span class="k">Main body</span><span class="v">169 × 169 × 218<small>mm</small></span><span class="d">Stands on its tail ring. Needs at least <span class="n">220 mm</span> of Z, tree supports under the nacelle ends, and a brim.</span></div>
+        <div class="item"><span class="k">Nose cone</span><span class="v">60 × 60 × 74<small>mm</small></span><span class="d">On its rim, no supports</span></div>
+        <div class="item"><span class="k">Hatch</span><span class="v">15 × 40 × 118<small>mm</small></span><span class="d">Stands on its front lip; use an <span class="n">8–10 mm</span> brim</span></div>
+        <div class="item"><span class="k">Nacelle tail cones ×4</span><span class="v">29 × 29 × 51<small>mm</small></span><span class="d">On the spigot, no supports</span></div>
+        <div class="item"><span class="k">Tail cone</span><span class="v">27 × 27 × 59<small>mm</small></span><span class="d">On the spigot, then glued in</span></div>
+        <div class="item"><span class="k">Settings</span><span class="v">PETG or ASA</span><span class="d"><span class="n">0.4 mm</span> nozzle, <span class="n">0.2 mm</span> layers, 4 walls, 20% gyroid</span></div>
+        <div class="item wide"><span class="k">Hardware</span><span class="v">7 heat-set inserts</span><span class="d"><span class="n">2 × M3</span> for the nose cone, <span class="n">1 × M2</span> for the hatch and <span class="n">4 × M2</span> for the soft-mounted stack. Self-tapping M2 screws hold the nacelle tail cones and the VTX.</span></div>
+      </div>
+      <p class="note">Print the nose cone and hatch in plain PETG or ASA. Carbon-filled filament would block the VTX, receiver and GPS. A carbon-filled main body raises the arm frequency by about 1.7×.</p>
     </div>
   </section>
 
   <section class="sec" id="avionics" aria-labelledby="h-avionics">
-    <header class="sec-h"><span class="no">07</span><h2 id="h-avionics">Avionics</h2></header>
+    <header class="sec-h"><span class="no">08</span><h2 id="h-avionics">Avionics</h2></header>
     <div class="sec-b">
       <div class="items c4">
-        <div class="item"><span class="k">Flight controller</span><span class="v">20 × 20<small>mm</small></span><span class="d">Stack</span></div>
-        <div class="item"><span class="k">GPS</span><span class="v">Above the FC</span><span class="d">For logging speed runs</span></div>
+        <div class="item"><span class="k">Flight controller</span><span class="v">20 × 20<small>mm</small></span><span class="d">On the 4-in-1 ESC, soft-mounted on four M2 bosses behind the battery</span></div>
+        <div class="item"><span class="k">GPS</span><span class="v">Top of stack</span><span class="d">Under the hatch, for logging speed runs</span></div>
         <div class="item"><span class="k">Video</span><span class="v">FPV camera</span><span class="d"><span class="n">Ø14 mm</span> lens behind the nose window; VTX in the nose cone</span></div>
         <div class="item"><span class="k">Receiver</span><span class="v">Compact</span><span class="d">In the nose cone</span></div>
+        <div class="item span2"><span class="k">Battery swap</span><span class="v">From the top</span><span class="d">Undo one M2 screw and lift the hatch. Plug the XT60, tuck it under the VTX shelf and drop the pack onto its rails. The nose cone stays on.</span></div>
+        <div class="item span2"><span class="k">Battery hold</span><span class="v">Rails, pads, stops</span><span class="d">Two side rails and a keel rail, two pads on the hatch above, and stop tabs behind the pack and in the nose cone ahead of it. <span class="n">0.5 mm</span> clearance all round.</span></div>
       </div>
-      <p class="note">Print the nose cone in an RF-transparent material such as PETG or ASA. Carbon-filled filament would block the VTX, receiver and GPS.</p>
     </div>
   </section>
 
   <section class="sec" id="verification" aria-labelledby="h-verification">
-    <header class="sec-h"><span class="no">08</span><h2 id="h-verification">CAD verification</h2></header>
+    <header class="sec-h"><span class="no">09</span><h2 id="h-verification">CAD verification</h2></header>
     <div class="sec-b">
-      <div class="items c2">
-        <div class="item"><span class="k">Bodies</span><span class="v">37</span><span class="d">In the Fusion 360 model</span></div>
+      <div class="items c4">
+        <div class="item"><span class="k">Bodies</span><span class="v">32</span><span class="d">In the Fusion 360 model</span></div>
         <div class="item"><span class="k">Interferences</span><span class="v">0</span><span class="d">Between any two bodies</span></div>
+        <div class="item span2"><span class="k">Access paths</span><span class="v">12 of 12 clear</span><span class="d">The battery drops in with the nose cone on, a 30 × 30 mm board drops through the hatch, both NACA throats open into the bay, a Ø2.4 mm probe passes every fin's wire channel and a hex key reaches every motor screw.</span></div>
       </div>
       <div class="panel">
         <p class="panel-h">Measured minimum clearance</p>
         <ul class="bars bars--gap">
-          <li><span class="lbl">Battery to fuselage shell</span><span class="track"><span class="fill" style="width:54%"></span></span><span class="val">1.35 mm</span></li>
-          <li><span class="lbl">Camera lens to nose window</span><span class="track"><span class="fill" style="width:20%"></span></span><span class="val">0.50 mm</span></li>
-          <li><span class="lbl">Motor bell to stator</span><span class="track"><span class="fill" style="width:28%"></span></span><span class="val">0.70 mm</span></li>
-          <li><span class="lbl">ESC to nacelle wall</span><span class="track"><span class="fill" style="width:40%"></span></span><span class="val">1.00 mm</span></li>
-          <li><span class="lbl">Carbon plate to its fuselage slot</span><span class="track"><span class="fill" style="width:89.2%"></span></span><span class="val">2.23 mm</span></li>
+          <li><span class="lbl">Hatch to main body</span><span class="track"><span class="fill" style="width:6%"></span></span><span class="val">0.15 mm</span></li>
+          <li><span class="lbl">Hatch to nose cone</span><span class="track"><span class="fill" style="width:8%"></span></span><span class="val">0.20 mm</span></li>
+          <li><span class="lbl">Camera to nose cone</span><span class="track"><span class="fill" style="width:8%"></span></span><span class="val">0.20 mm</span></li>
+          <li><span class="lbl">Battery to rails and hatch pads</span><span class="track"><span class="fill" style="width:20%"></span></span><span class="val">0.50 mm</span></li>
+          <li><span class="lbl">4-in-1 ESC to its bosses</span><span class="track"><span class="fill" style="width:20%"></span></span><span class="val">0.50 mm</span></li>
+          <li><span class="lbl">Battery to nose-cone stops</span><span class="track"><span class="fill" style="width:40%"></span></span><span class="val">1.00 mm</span></li>
         </ul>
       </div>
     </div>
   </section>
 
   <section class="sec" id="next" aria-labelledby="h-next">
-    <header class="sec-h"><span class="no">09</span><h2 id="h-next">Next steps</h2></header>
+    <header class="sec-h"><span class="no">10</span><h2 id="h-next">Next steps</h2></header>
     <div class="sec-b">
       <ul class="todo">
-        <li>Split the parts for printing and export STLs</li>
-        <li>Carbon plate DXF files</li>
-        <li>Nose-cone latch and battery tray</li>
-        <li>Wiring routes</li>
-        <li>Flight testing</li>
+        <li>Print fit-test pieces: nose joint, hatch lip and rear tab</li>
+        <li>Print the airframe in PETG or ASA</li>
+        <li>Wire and soft-mount the 4-in-1 ESC and flight controller</li>
+        <li>Measure arm vibration against the 175 Hz model</li>
+        <li>Flight testing and GPS speed runs</li>
       </ul>
     </div>
   </section>
@@ -580,7 +615,7 @@ footer { border-top: 1px solid var(--line); }
 <footer>
   <div class="wrap foot">
     <span class="stamp">Top Secret Aero</span>
-    <p>SPEED-QUAD TS5 · rev. v3 · Nov 2026 · <a href="https://www.instagram.com/topsecret.aero/" target="_blank" rel="noopener">Instagram @topsecret.aero</a></p>
+    <p>SPEED-QUAD TS5 · rev. v4.1 · Nov 2026 · <a href="https://www.instagram.com/topsecret.aero/" target="_blank" rel="noopener">Instagram @topsecret.aero</a></p>
   </div>
 </footer>
 
@@ -667,8 +702,7 @@ scene.add(new THREE.HemisphereLight(0xffffff, 0x0a0a0a, 0.3));
 
 const mat = {
   shell:  new THREE.MeshPhysicalMaterial({ color: 0xedeee9, roughness: 0.34, clearcoat: 1, clearcoatRoughness: 0.12 }),
-  hub:    new THREE.MeshStandardMaterial({ color: 0x3c3f45, roughness: 0.5 }),
-  carbon: new THREE.MeshStandardMaterial({ color: 0x24262a, roughness: 0.32, metalness: 0.35 }),
+  hatch:  new THREE.MeshPhysicalMaterial({ color: 0x34373c, roughness: 0.42, clearcoat: 0.8, clearcoatRoughness: 0.2 }),
   bell:   new THREE.MeshStandardMaterial({ color: 0xa0101f, roughness: 0.28, metalness: 0.85 }),
   base:   new THREE.MeshStandardMaterial({ color: 0x19191b, roughness: 0.6 }),
   copper: new THREE.MeshStandardMaterial({ color: 0xc8804a, roughness: 0.3, metalness: 1 }),
@@ -682,37 +716,37 @@ const mat = {
 };
 
 function kind(n) {
-  if (n.startsWith('fus_') || n.startsWith('arm_')) return 'shell';
-  if (n === 'hub') return 'hub';
-  if (n.startsWith('core_')) return 'carbon';
+  if (n === 'hatch') return 'hatch';
+  if (n === 'main_body' || n === 'nose_cone' || n === 'tail_cone' || n.startsWith('nac_tail')) return 'shell';
   if (n.startsWith('motor_bell')) return 'bell';
   if (n.startsWith('motor_base')) return 'base';
   if (n.startsWith('motor_stator')) return 'copper';
   if (n.startsWith('prop_')) return 'prop';
-  if (n.startsWith('esc_')) return 'esc';
+  if (n.startsWith('esc')) return 'esc';
   if (n === 'battery') return 'battery';
-  if (n === 'fc_stack') return 'fc';
+  if (n === 'fc') return 'fc';
   if (n === 'gps') return 'gps';
   if (n === 'camera') return 'camera';
   return 'dark';
 }
 
 const LABEL = {
-  fus_nose: ['Nose cone', 'Removable, Ø15 mm camera window'],
-  fus_main: ['Fuselage shell', 'NACA-law body of revolution, 1.5 mm wall'],
-  arm: ['Fin and nacelle', 'NACA 0012 fin, Ø30 × 95 mm nacelle'],
-  core: ['Carbon plate', '3 mm, 24 × 76 mm'],
-  hub: ['Hub tube', 'Ø23 / Ø12 mm, slotted for the carbon plates'],
+  main_body: ['Main body', 'One print: fuselage, four fins and nacelle fronts'],
+  nose_cone: ['Nose cone', 'Camera window, VTX and receiver; two M3 screws'],
+  tail_cone: ['Tail cone', 'Glued spigot joint, Ø8 mm exhaust'],
+  hatch: ['Top hatch', '107 mm long; the battery drops in from the top'],
+  nac_tail: ['Nacelle tail cone', 'One M2 screw; comes off for motor-screw access'],
   motor_bell: ['Motor', '2207, 1950 KV'],
   motor_stator: ['Stator', '12 copper windings'],
   motor_base: ['Motor base', 'Cooling vents, 16 × 16 mm M3 mount'],
   prop: ['Prop', '5 × 5 two-blade'],
-  esc: ['ESC', '30 × 13 × 5 mm, in the nacelle airflow'],
+  esc_4in1: ['4-in-1 ESC', '20 × 20 mm, soft-mounted under the FC'],
   battery: ['Battery', '6S 1300 mAh LiPo, 215 g'],
-  fc_stack: ['Flight controller', '20 × 20 mm stack'],
+  fc: ['Flight controller', '20 × 20 mm'],
   gps: ['GPS', 'Logs speed runs'],
   vtx: ['Video transmitter', 'In the nose cone'],
   rx: ['Receiver', 'In the nose cone'],
+  xt60: ['XT60', 'Battery plug, tucked under the VTX shelf'],
   camera: ['FPV camera', 'Ø14 mm lens'],
 };
 function labelFor(name) {
@@ -943,7 +977,7 @@ fetch('model.json')
         mesh.position.copy(c);
         props.push({ mesh, dir: Number(p.name.slice(-1)) % 2 ? -1 : 1 });
       }
-      if (k === 'shell') shells.push(mesh);
+      if (k === 'shell' || k === 'hatch') shells.push(mesh);
       group.add(mesh);
     }
     const box = new THREE.Box3().setFromObject(group);
@@ -967,11 +1001,12 @@ const btn = {
   rotate: document.getElementById('btn-rotate'),
 };
 function apply() {
-  const m = mat.shell;
-  m.transparent = state.xray;
-  m.opacity = state.xray ? 0.14 : 1;
-  m.depthWrite = !state.xray;
-  m.needsUpdate = true;
+  for (const m of [mat.shell, mat.hatch]) {
+    m.transparent = state.xray;
+    m.opacity = state.xray ? 0.14 : 1;
+    m.depthWrite = !state.xray;
+    m.needsUpdate = true;
+  }
   shells.forEach(s => { s.castShadow = !state.xray; });
   controls.autoRotate = state.rotate;
   if (flowMesh) flowMesh.visible = state.flow;
