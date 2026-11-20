@@ -261,6 +261,32 @@ ul.todo li::before { content: ""; position: absolute; left: 2px; top: 18px; widt
 }
 .cta-btn:hover { background: #e3203a; }
 
+
+/* CFD section */
+.claude-band { display: flex; gap: 14px; align-items: flex-start; border: 1px solid var(--line2); border-left: 3px solid var(--accent); border-radius: 4px; padding: 14px 16px; background: #060708; }
+.claude-band .mark { flex: none; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-ink); padding-top: 2px; }
+.claude-band p { margin: 0; font-size: 14.5px; line-height: 1.55; }
+.claude-band p + p { margin-top: 6px; color: var(--muted); font-size: 13.5px; }
+.shots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.shot { margin: 0; min-width: 0; }
+.shot.wide { grid-column: 1 / -1; }
+.shot a { display: block; border: 1px solid var(--line2); border-radius: 3px; overflow: hidden; background: #0b0c0e; }
+.shot img { display: block; width: 100%; height: auto; }
+.shot figcaption { margin-top: 8px; font-size: 13.5px; line-height: 1.5; color: var(--muted); }
+.shot figcaption b { color: var(--fg); font-weight: 600; }
+.pipeline { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 24px; }
+.pipeline li { border-top: 1px solid var(--line2); padding: 12px 0 14px; font-size: 14px; line-height: 1.5; color: var(--muted); }
+.pipeline li b { display: block; font-family: var(--mono); font-weight: 400; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--fg); margin-bottom: 4px; }
+ul.todo li b { color: var(--fg); }
+.book { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; border: 1px solid var(--accent); border-radius: 4px; padding: 16px 18px; background: rgba(208, 20, 44, .08); }
+.book p { margin: 0; font-size: 15px; max-width: 60ch; }
+.book p span { display: block; color: var(--muted); font-size: 13.5px; margin-top: 4px; }
+.cta-btn.ghost { background: transparent; border: 1px solid var(--accent); }
+.cta-btn.ghost:hover { background: rgba(208, 20, 44, .2); }
+.cta-btns { display: flex; flex-wrap: wrap; gap: 10px; }
+@media (max-width: 860px) { .pipeline { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 560px) { .shots { grid-template-columns: minmax(0, 1fr); } .book .cta-btn, .cta-btns { flex: 1 1 100%; text-align: center; } }
+
 /* ---------- footer */
 footer { border-top: 1px solid var(--line); }
 .foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-block: 22px 30px; }
@@ -307,6 +333,7 @@ footer { border-top: 1px solid var(--line); }
   <h1>SPEED-QUAD TS5</h1>
   <p class="lede">A 5-inch, 6S tail-sitter quad built for straight-line speed, with a fully 3D-printed airframe. It takes off nose-up, pitches over 90° and flies on four X-pattern fins, with a motor nacelle at the tip of each fin.</p>
   <p class="status">Design study · Fusion 360 · rev. v4.1 · print files ready, not yet printed or flown</p>
+  <p class="status">Modeled and CFD-tested by Claude, Anthropic's AI · <a href="#cfd">see the CFD run</a> · <a href="https://kimhyunseok.gumroad.com/l/fieldmanual" target="_blank" rel="noopener">how it's done</a></p>
 </header>
 
 <section class="bay" aria-label="3D model">
@@ -340,11 +367,12 @@ footer { border-top: 1px solid var(--line); }
     <a href="#propulsion"><span class="no">03</span>Propulsion</a>
     <a href="#mass"><span class="no">04</span>Mass &amp; balance</a>
     <a href="#performance"><span class="no">05</span>Performance</a>
-    <a href="#airframe"><span class="no">06</span>Airframe</a>
-    <a href="#printing"><span class="no">07</span>Printing</a>
-    <a href="#avionics"><span class="no">08</span>Avionics</a>
-    <a href="#verification"><span class="no">09</span>CAD check</a>
-    <a href="#next"><span class="no">10</span>Next steps</a>
+    <a href="#cfd"><span class="no">06</span>CFD</a>
+    <a href="#airframe"><span class="no">07</span>Airframe</a>
+    <a href="#printing"><span class="no">08</span>Printing</a>
+    <a href="#avionics"><span class="no">09</span>Avionics</a>
+    <a href="#verification"><span class="no">10</span>CAD check</a>
+    <a href="#next"><span class="no">11</span>Next steps</a>
   </div>
 </nav>
 
@@ -519,12 +547,57 @@ footer { border-top: 1px solid var(--line); }
         </div>
       </div>
       <p class="note">Assumes loaded rpm is 85% of KV × voltage. Top speed is set by prop pitch × rpm rather than airframe drag, so going faster needs higher-pitch props, higher KV or more voltage. Not flight-tested.</p>
-      <p class="note">The airflow in the 3D view comes from a potential-flow model of the fuselage and nacelle pods plus a simple prop-slipstream model. It shows the flow pattern; it is not wind-tunnel or CFD data.</p>
+      <p class="note">The airflow in the 3D view comes from a potential-flow model of the fuselage and nacelle pods plus a simple prop-slipstream model. It shows the flow pattern; it is not wind-tunnel or CFD data. The CFD results are in section 06.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="cfd" aria-labelledby="h-cfd">
+    <header class="sec-h"><span class="no">06</span><h2 id="h-cfd">CFD analysis</h2><span class="tag">300 km/h · simulated</span></header>
+    <div class="sec-b">
+      <div class="claude-band">
+        <span class="mark">Run by Claude</span>
+        <div>
+          <p>Every step of this analysis was done by Claude, Anthropic's AI, on its own. It built the flow geometry in Fusion 360 and drove Autodesk CFD 2027 through import, materials, boundary conditions, mesh and solve. Then it placed the cut planes and streamlines and took the screenshots below.</p>
+          <p>Nobody clicked anything in the CFD software. CFD's Python API crashes on boundary conditions, so Claude set them by operating the program's own window. The builder only said what to analyze.</p>
+        </div>
+      </div>
+      <div class="items c4">
+        <div class="item"><span class="k">Drag at 300 km/h</span><span class="v">18.95<small>N</small></span><span class="d">88% pressure drag, 12% skin friction</span></div>
+        <div class="item"><span class="k">Drag area CdA</span><span class="v">45<small>cm²</small></span><span class="d">Same at 280 and 300 km/h</span></div>
+        <div class="item"><span class="k">Power to beat drag</span><span class="v">1.58<small>kW</small></span><span class="d">About 2.4–2.9 kW from the battery</span></div>
+        <div class="item"><span class="k">NACA inlet flow</span><span class="v">≈4.5<small>g/s</small></span><span class="d">Throat air at <span class="n">36–43 m/s</span>, about half of flight speed</span></div>
+      </div>
+      <div class="shots">
+        <figure class="shot wide"><a href="cfd/cfd_window.jpg" target="_blank" rel="noopener"><img src="cfd/cfd_window.jpg" alt="Autodesk CFD 2027 window showing the velocity cut plane and air traces through the NACA inlets, top view" loading="lazy" width="1600" height="866"></a><figcaption><b>The CFD session Claude drove</b> · Autodesk CFD 2027, 300 km/h case. Air enters both NACA inlets, swirls around the stack in the bay and leaves aft.</figcaption></figure>
+        <figure class="shot"><a href="cfd/side_streamlines.jpg" target="_blank" rel="noopener"><img src="cfd/side_streamlines.jpg" alt="Side view of streamlines colored by speed around the fuselage and a nacelle" loading="lazy" width="1600" height="538"></a><figcaption><b>Side view</b> · streamlines colored by speed (cm/s), 280 km/h baseline run.</figcaption></figure>
+        <figure class="shot"><a href="cfd/streamlines_3d.jpg" target="_blank" rel="noopener"><img src="cfd/streamlines_3d.jpg" alt="3D view of streamline sheets passing the airframe" loading="lazy" width="1600" height="538"></a><figcaption><b>3D streamlines</b> · the slow wake behind the fuselage and nacelles.</figcaption></figure>
+        <figure class="shot"><a href="cfd/duct_flow_top.jpg" target="_blank" rel="noopener"><img src="cfd/duct_flow_top.jpg" alt="Top view of traces entering the NACA inlets and the electronics bay" loading="lazy" width="1600" height="538"></a><figcaption><b>Inside the bay</b> · traces seeded at the inlets, 300 km/h.</figcaption></figure>
+        <figure class="shot"><a href="cfd/naca_inlet.jpg" target="_blank" rel="noopener"><img src="cfd/naca_inlet.jpg" alt="Close-up of the flush NACA inlet in the flow model" loading="lazy" width="1600" height="538"></a><figcaption><b>The NACA inlet</b> in the flow model Claude built in Fusion 360.</figcaption></figure>
+      </div>
+      <div class="panel">
+        <p class="panel-h">What it says about 300 km/h</p>
+        <ul class="todo">
+          <li><b>Props first.</b> 300 km/h needs a pitch speed of about 375–405 km/h, and the current 5×5 at 1950 KV gives 280–318. Pitch × rpm has to go up 35–45%: higher pitch, higher KV or 8S.</li>
+          <li><b>Spinners on the motors.</b> 88% of the drag is pressure drag, so the flat motor fronts are the first shape fix.</li>
+          <li><b>A bigger battery.</b> 110–135 A means 85–105C from a 6S 1300 mAh pack.</li>
+          <li><b>A baffle in the bay</b> to send the inlet air through the ESC instead of round the stack.</li>
+        </ul>
+      </div>
+      <ol class="pipeline" aria-label="How Claude ran it">
+        <li><b>1 · Geometry</b>Claude merged the airframe into one solid in Fusion 360, cut a wind tunnel around it and exported STEP.</li>
+        <li><b>2 · Setup and solve</b>Python scripts in CFD for import, materials and mesh. Window automation for inlet speed and far-field pressure. k-ε turbulence, 400 iterations.</li>
+        <li><b>3 · Results</b>Forces read from the solver's output files. Planes, traces and screenshots placed through the CFD window.</li>
+      </ol>
+      <p class="note">Coarse automatic mesh (about 435k fluid cells), no spinning props and flat motor fronts, so treat the drag as an upper bound. In the inlet run the turbulence residuals did not settle everywhere. Velocity and pressure did, and the drag matched the 280 km/h run scaled by speed² to within 0.1%. Not wind-tunnel or flight data.</p>
+      <div class="book">
+        <p>Want Claude to do this with your own designs?<span>The field manual shows how to set up Claude with Fusion 360 and get design work like this done just by asking.</span></p>
+        <a class="cta-btn" href="https://kimhyunseok.gumroad.com/l/fieldmanual" target="_blank" rel="noopener">Get the field manual</a>
+      </div>
     </div>
   </section>
 
   <section class="sec" id="airframe" aria-labelledby="h-airframe">
-    <header class="sec-h"><span class="no">06</span><h2 id="h-airframe">Airframe</h2></header>
+    <header class="sec-h"><span class="no">07</span><h2 id="h-airframe">Airframe</h2></header>
     <div class="sec-b">
       <div class="items c2">
         <div class="item wide"><span class="k">Structure</span><span class="v">100% printed, no carbon</span><span class="d">The main body is one print: fuselage, all four fins and the nacelle fronts. An internal X-web (<span class="n">3.5 mm</span>) ties opposite fins together, and a web inside each nacelle carries thrust from the motor wall into the fin.</span></div>
@@ -540,7 +613,7 @@ footer { border-top: 1px solid var(--line); }
   </section>
 
   <section class="sec" id="printing" aria-labelledby="h-printing">
-    <header class="sec-h"><span class="no">07</span><h2 id="h-printing">Printing</h2><span class="tag">5 parts · 8 prints</span></header>
+    <header class="sec-h"><span class="no">08</span><h2 id="h-printing">Printing</h2><span class="tag">5 parts · 8 prints</span></header>
     <div class="sec-b">
       <div class="items c2">
         <div class="item"><span class="k">Main body</span><span class="v">169 × 169 × 218<small>mm</small></span><span class="d">Stands on its tail ring. Needs at least <span class="n">220 mm</span> of Z, tree supports under the nacelle ends, and a brim.</span></div>
@@ -556,7 +629,7 @@ footer { border-top: 1px solid var(--line); }
   </section>
 
   <section class="sec" id="avionics" aria-labelledby="h-avionics">
-    <header class="sec-h"><span class="no">08</span><h2 id="h-avionics">Avionics</h2></header>
+    <header class="sec-h"><span class="no">09</span><h2 id="h-avionics">Avionics</h2></header>
     <div class="sec-b">
       <div class="items c4">
         <div class="item"><span class="k">Flight controller</span><span class="v">20 × 20<small>mm</small></span><span class="d">On the 4-in-1 ESC, soft-mounted on four M2 bosses behind the battery</span></div>
@@ -570,7 +643,7 @@ footer { border-top: 1px solid var(--line); }
   </section>
 
   <section class="sec" id="verification" aria-labelledby="h-verification">
-    <header class="sec-h"><span class="no">09</span><h2 id="h-verification">CAD verification</h2></header>
+    <header class="sec-h"><span class="no">10</span><h2 id="h-verification">CAD verification</h2></header>
     <div class="sec-b">
       <div class="items c4">
         <div class="item"><span class="k">Bodies</span><span class="v">32</span><span class="d">In the Fusion 360 model</span></div>
@@ -592,7 +665,7 @@ footer { border-top: 1px solid var(--line); }
   </section>
 
   <section class="sec" id="next" aria-labelledby="h-next">
-    <header class="sec-h"><span class="no">10</span><h2 id="h-next">Next steps</h2></header>
+    <header class="sec-h"><span class="no">11</span><h2 id="h-next">Next steps</h2></header>
     <div class="sec-b">
       <ul class="todo">
         <li>Print fit-test pieces: nose joint, hatch lip and rear tab</li>
@@ -608,7 +681,8 @@ footer { border-top: 1px solid var(--line); }
 <section class="cta" aria-label="Follow the build">
   <div class="wrap cta-in">
     <p><b>This airframe hasn't flown yet.</b> Follow the build on Instagram: prints, first flights and speed runs as they happen.</p>
-    <a class="cta-btn" href="https://www.instagram.com/topsecret.aero/" target="_blank" rel="noopener">Follow @topsecret.aero</a>
+    <span class="cta-btns"><a class="cta-btn" href="https://www.instagram.com/topsecret.aero/" target="_blank" rel="noopener">Follow @topsecret.aero</a>
+    <a class="cta-btn ghost" href="https://kimhyunseok.gumroad.com/l/fieldmanual" target="_blank" rel="noopener">How Claude built it →</a></span>
   </div>
 </section>
 
